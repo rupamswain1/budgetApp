@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "9a55aa70-1397-4777-930e-468684950a64",
+		"name": "BudgetApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7157477"
+	},
+	"item": [
+		{
+			"name": "get budget",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A/exec?action=getBudget&month=11&year=2024&user=Rupam",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "getBudget"
+						},
+						{
+							"key": "month",
+							"value": "11"
+						},
+						{
+							"key": "year",
+							"value": "2024"
+						},
+						{
+							"key": "user",
+							"value": "Rupam"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add budget",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " { \"date\": \"2024-11-01\", \"budget\": 5000 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A/exec?action=addBudget&user=Rupam",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "addBudget"
+						},
+						{
+							"key": "user",
+							"value": "Rupam"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add expense",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"date\": \"2024-11-01\", \"item\": \"Dmart\", \"price\": 200, \"paidBy\": \"Rupam\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A/exec?action=addExpense&user=Rupam",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "addExpense"
+						},
+						{
+							"key": "user",
+							"value": "Rupam"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expense",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A/exec?action=getExpenses&month=11&year=2024&user=Rupam",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "getExpenses"
+						},
+						{
+							"key": "month",
+							"value": "11"
+						},
+						{
+							"key": "year",
+							"value": "2024"
+						},
+						{
+							"key": "user",
+							"value": "Rupam"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A/exec?action=validateUser&user=Rupam",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "validateUser"
+						},
+						{
+							"key": "user",
+							"value": "Rupam"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
