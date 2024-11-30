@@ -10,7 +10,7 @@ const BudgetPage = () => {
   const [loading, setLoading] = useState(true); // Loader state
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
-  console.log('Expense page');
+
   useEffect(() => {
     fetchBudget();
   }, [navigate]);
@@ -87,7 +87,7 @@ const BudgetPage = () => {
     setLoading(true);
     setShowForm(false);
     const isPosted = await postBudget(amount, date);
-    console.log({ isPosted });
+
     if (isPosted) {
       sessionStorage.setItem(
         'budget',

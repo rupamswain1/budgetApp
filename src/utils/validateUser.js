@@ -1,5 +1,4 @@
 export const isValidUser = async (userName) => {
-  console.log({ userName });
   if (userName.trim()) {
     try {
       // Make a GET API call
@@ -13,7 +12,6 @@ export const isValidUser = async (userName) => {
         }
       );
       const data = await response.json();
-      console.log({ data });
       if (data.message === 'success') {
         return true;
       } else {

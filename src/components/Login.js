@@ -31,32 +31,9 @@ const Login = ({ setUserName }) => {
         >
           Name:
         </label>
-        <input
-          type="text"
-          id="userName"
-          ref={enteredUser}
-          style={{
-            width: '100%',
-            padding: '10px',
-            border: '1px solid #ced4da',
-            borderRadius: '4px',
-            fontSize: '16px',
-          }}
-        />
+        <input type="text" id="userName" ref={enteredUser} className="input" />
       </div>
-      <button
-        type="submit"
-        style={{
-          width: '100%',
-          padding: '10px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          fontSize: '16px',
-          cursor: 'pointer',
-        }}
-      >
+      <button type="submit" className="primaryBtn">
         Submit
       </button>
     </form>

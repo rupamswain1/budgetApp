@@ -10,13 +10,12 @@ import { isValidUser } from './utils/validateUser';
 import Loader from './components/Loader';
 import Login from './components/Login';
 import BudgetPage from './components/BudgetPage';
-import ExpensePage from './components/ExpensePage';
+import ExpensesPage from './components/ExpensesPage';
 
 const HomePage = () => {
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false); // Loader state
   const navigate = useNavigate();
-
   // Check session storage on component mount
   useEffect(() => {
     const savedUserName = sessionStorage.getItem('userName');
@@ -74,7 +73,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/budget" element={<BudgetPage />} />
-          <Route path="/expenses" element={<ExpensePage />} />
+          <Route path="/expenses" element={<ExpensesPage />} />
         </Route>
       </Routes>
     </Router>

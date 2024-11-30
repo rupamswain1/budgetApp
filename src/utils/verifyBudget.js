@@ -4,7 +4,7 @@ export const verifySessionBudget = (budget) => {
   const currentYear = now.getFullYear();
   if (budget) {
     const dateSplitted = budget.date.split('-');
-    return currentMonth === dateSplitted[1] && currentYear === dateSplitted[0];
+    return currentMonth == dateSplitted[1] && currentYear == dateSplitted[0];
   }
   return false;
 };
