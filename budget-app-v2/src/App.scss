@@ -1,0 +1,9 @@
+$mobile: 425px;
+$full-width:1024px;
+
+@media only screen and (min-width: $mobile) {
+    #root{
+      max-width: $full-width;
+    }
+    
+  }
