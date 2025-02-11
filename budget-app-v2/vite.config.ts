@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react()],
   resolve:{
     alias:{
-      '$interfaces':path.resolve(__dirname, 'src/interfaces')
+      '@scss':path.resolve(__dirname,'src/scss'),
+      '$interfaces':path.resolve(__dirname, 'src/interfaces'),
+      '$components':path.resolve(__dirname, 'src/components'),
+      '$pages':path.resolve(__dirname, 'src/pages')
     }
   }
 })

@@ -1,0 +1,51 @@
+@use '@scss/variables' as v;
+@use '@scss/functions' as f;
+
+.nav-btn {
+    width: 20%;
+    padding: 0.5rem;
+    border: none;
+    background-color: v.$background;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+
+    &:hover:not(.floating-container) {
+        cursor: pointer;
+        background-color: v.$success-light;
+        transition: background-color 0.3s ease;
+    }
+}
+
+.nav-btn-selected {
+    background-color: v.$success;
+}
+
+.center-btn {
+    position: absolute;
+    top: -30px;
+    right: f.subtract(50%, 25px);
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.floating-container {
+    border-top: none;
+
+    &::before {
+        content: "";
+        border-radius: 50%;
+        z-index: 10;
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        background-color: v.$background;
+        top: -35px;
+        border-bottom: 2px solid rgb(212, 211, 211);
+    }
+}

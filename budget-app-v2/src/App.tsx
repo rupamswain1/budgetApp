@@ -1,15 +1,16 @@
-import './App.css'
-import './App.scss'
-import HomePage from './pages/homePage/HomePage'
-import NavBar from './pages/homePage/navBar/navbar'
+import "./App.css";
+import "./App.scss";
+import { Homepage, LoginPage } from "$pages";
+import { NavBar } from "$components";
 
 function App() {
   return (
     <div id="main-content">
-      <HomePage/>
-      <NavBar/>
+      {/* <Homepage/>
+      <NavBar/> */}
+      <LoginPage />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -7,8 +7,13 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "$interfaces":["interfaces/index.ts"]
+      "@scss":["src/scss"],
+      "$interfaces":["interfaces/index.ts"],
+      "$components":["components/index.ts"],
+      "$pages":["pages/index.ts"]
     },
-    "types":["node","vite/client"]
-  }
+    "types":["node","vite/client"],
+    "jsx":"react",
+    "moduleResolution": "node"
+  },
 }

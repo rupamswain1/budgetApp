@@ -1,9 +1,14 @@
-$mobile: 425px;
-$full-width:1024px;
+@use '@scss/variables' as v;
 
-@media only screen and (min-width: $mobile) {
-    #root{
-      max-width: $full-width;
-    }
-    
+#main-content {
+  width: 100%;
+  position: relative;
+  height: 98vh;
+}
+
+@media only screen and (min-width: v.$mobile) {
+  #root {
+    max-width: v.$full-width;
   }
+
+}

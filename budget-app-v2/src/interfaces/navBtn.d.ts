@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { IconType } from "react-icons";
 
 
 export interface NavButton{
@@ -6,6 +6,6 @@ export interface NavButton{
     name:string,
     href:string,
     enabled:boolean,
-    logo:ReactNode,
+    logo:IconType,
     onClick?:()=>void;
 }

@@ -1,0 +1,3 @@
+@function subtract($base, $value) {
+    @return calc(#{$base} - #{$value})
+}
