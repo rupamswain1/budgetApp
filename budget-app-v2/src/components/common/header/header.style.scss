@@ -1,0 +1,7 @@
+@use '@scss/variables' as v;
+.h1-text{
+    font-size: v.$lg !important;
+}
+.h2-text{
+    font-size: v.$sm !important;
+}

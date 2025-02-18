@@ -6,6 +6,13 @@
   height: 98vh;
 }
 
+.primary{
+  color: v.$success;
+}
+.secondary{
+  color: v.$grey;
+}
+
 @media only screen and (min-width: v.$mobile) {
   #root {
     max-width: v.$full-width;

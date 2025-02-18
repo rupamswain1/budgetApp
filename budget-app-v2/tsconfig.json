@@ -10,7 +10,8 @@
       "@scss":["src/scss"],
       "$interfaces":["interfaces/index.ts"],
       "$components":["components/index.ts"],
-      "$pages":["pages/index.ts"]
+      "$pages":["pages/index.ts"],
+      "$constants":["constants/index.ts"]
     },
     "types":["node","vite/client"],
     "jsx":"react",
