@@ -12,6 +12,18 @@ export const H1 = ({ text, type }: { text: string; type: itemType }) => {
   );
 };
 
+export const H1lg = ({ text, type }: { text: string; type: itemType }) => {
+  return (
+    <h1
+      className={`${
+        type === ITEM_TYPES.PRIMARY ? "primary" : "secondary"
+      } h1lg-text`}
+    >
+      {text}
+    </h1>
+  );
+};
+
 export const H2 = ({ text, type }: { text: string; type: itemType }) => {
   return (
     <h2

@@ -1,15 +1,16 @@
 import "./login.style.scss";
 import { loginConstant } from "$constants";
-import { H1, H2 } from "$components";
+import { H1lg, H1, InputField } from "$components";
 import { ITEM_TYPES } from "$interfaces";
 const LoginPage = () => {
   return (
     <div className="login-container">
-      <header>
-        <H1 text={loginConstant.WELCOME_TEXT} type={ITEM_TYPES.PRIMARY} />
+      <header className="header-container">
+        <H1lg text={loginConstant.WELCOME_TEXT} type={ITEM_TYPES.PRIMARY} />
       </header>
-      <section>
-        <H2 text="Login" type={ITEM_TYPES.SECONDARY} />
+      <section className="login-section">
+        <H1 text="Login" type={ITEM_TYPES.SECONDARY} />
+        <InputField name="userName" label="User Name"/>
       </section>
     </div>
   );

@@ -1,0 +1,18 @@
+@use '@scss/variables' as v;
+.login-container{
+    height: 100%;
+}
+
+.header-container{
+    padding: 1rem;
+}
+
+.login-section{
+    margin: 1rem;
+    padding: 0.6rem;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
