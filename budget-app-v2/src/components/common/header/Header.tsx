@@ -1,11 +1,11 @@
 import { itemType, ITEM_TYPES } from "$interfaces";
 import "./header.style.scss";
-export const H1 = ({ text, type }: { text: string; type: itemType }) => {
+export const H1 = ({ text, type, className }: { text: string; type: itemType; className?:string }) => {
   return (
     <h1
       className={`${
         type === ITEM_TYPES.PRIMARY ? "primary" : "secondary"
-      } h1-text`}
+      } h1-text ${className ?? ''}`}
     >
       {text}
     </h1>

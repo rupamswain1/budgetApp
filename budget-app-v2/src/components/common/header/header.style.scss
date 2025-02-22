@@ -1,10 +1,13 @@
 @use '@scss/variables' as v;
 .h1-text{
     font-size: v.$lg !important;
+    margin: 0px;
 }
 .h1lg-text{
     font-size: v.$xlg !important;
+    margin: 0px;
 }
 .h2-text{
     font-size: v.$sm !important;
+    margin: 0px;
 }
