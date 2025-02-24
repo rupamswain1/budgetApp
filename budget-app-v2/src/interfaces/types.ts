@@ -1,6 +1,6 @@
 export const ITEM_TYPES = {
-    PRIMARY:"Primary" as const,
-    SECONDARY:"Secondary" as const
+    PRIMARY:"primary" as const,
+    SECONDARY:"secondary" as const
 }
 
 export type itemTypes = keyof typeof ITEM_TYPES;

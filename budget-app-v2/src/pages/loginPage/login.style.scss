@@ -1,6 +1,7 @@
 @use '@scss/variables' as v;
 .login-container{
     height: 99%;
+    position: relative;
 }
 
 .header-container{
@@ -10,8 +11,7 @@
 }
 
 .login-section{
-    padding: 0.6rem;
-    border: 1px solid red;
+    padding: 0.8em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,4 +20,13 @@
 
 .login{
     padding: 0.25em 0;
+}
+.login-btn{
+    margin-top: 1em;
+    width:100%
+}
+.login-add-expense{
+    top:0px !important;
+    bottom: 300px !important;
+    right:1em !important;
 }

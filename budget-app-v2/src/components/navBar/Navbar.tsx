@@ -4,7 +4,7 @@ import { FaChartLine } from "react-icons/fa";
 import { LuRepeat2 } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";
 import { LuReceiptIndianRupee } from "react-icons/lu";
-import { DummyButton, IconButton } from "$components";
+import { AddExpenses, DummyButton, IconButton } from "$components";
 
 import "./navbar.style.scss";
 const NavBar = () => {
@@ -50,16 +50,7 @@ const NavBar = () => {
       {navItems.map((item) => {
         return (
           <>
-            {item.id === "add" && (
-                <IconButton
-                id={item.id}
-                isActive={false}
-                Icon={item.logo}
-                name={item.name}
-                customClass="center-btn nav-btn-selected"
-                isNameVisible = {false}
-              />
-            )}
+            {item.id === "add" && <AddExpenses />}
             {item.id !== "add" ? (
               <IconButton
                 id={item.id}
@@ -68,7 +59,7 @@ const NavBar = () => {
                 name={item.name}
               />
             ) : (
-              <DummyButton/>
+              <DummyButton />
             )}
           </>
         );

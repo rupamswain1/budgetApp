@@ -1,0 +1,21 @@
+@use '@scss/variables' as v;
+.kharcha-btn{
+    font-size: v.$label;
+    font-weight: bold;
+    padding: 0.4em;
+    border: none;
+    background-color: white;
+    border-radius:0.3em;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.primary-btn{
+    background-color: v.$success;
+    color:white;
+}
+.secondary-btn{
+    color:v.$success;
+    border: 2px solid v.$success;
+}

@@ -1,14 +1,6 @@
 import { Icons } from "$components";
 import "./iconButton.style.scss";
-interface IconButtonProps {
-  id: string;
-  customClass?: string;
-  isActive: boolean;
-  Icon: React.ElementType;
-  name: string;
-  handleClick?: () => void;
-  isNameVisible?: boolean;
-}
+import { IconButtonProps } from "$interfaces";
 
 const IconButton: React.FC<IconButtonProps> = ({
   id,
