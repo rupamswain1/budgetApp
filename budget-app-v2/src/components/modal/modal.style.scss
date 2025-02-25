@@ -1,0 +1,28 @@
+@use '@scss/variables' as v;
+
+.modal-container {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    border: 0.1px solid rgba(0, 0, 0, 0.15);
+    height: 90%;
+    width: 90%;
+    background-color: white;
+    border-radius: 0.7em;
+    box-shadow: -10px 10px 12px rgba(0, 0, 0, 0.15),
+        10px 10px 12px rgba(0, 0, 0, 0.15);
+    z-index: 200;
+    box-sizing: border-box;
+    padding: 0.75rem;
+}
+
+.modal-close-btn {
+    border: 0px;
+    background-color: white;
+    position: absolute;
+    top: 1%;
+    left: 88%;
+    &:hover{
+        cursor: pointer;
+    }
+}

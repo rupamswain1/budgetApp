@@ -5,7 +5,6 @@ interface ButtonProps {
   type: "primary" | "secondary";
   isEnabled?: boolean;
   onClick: () => void;
-  key: string;
   className?: string;
 }
 
@@ -14,14 +13,13 @@ const Button: React.FC<ButtonProps> = ({
   type = "primary",
   isEnabled = "true",
   onClick,
-  key,
   className,
 }) => {
   return (
     <button
       className={`kharcha-btn ${type}-btn ${className} ${!isEnabled && "btn-disabled"}`}
       onClick={onClick}
-      key={key}
+      key={name}
     >
       {name}
     </button>

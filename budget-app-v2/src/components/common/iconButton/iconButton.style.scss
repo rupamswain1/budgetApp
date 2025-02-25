@@ -21,18 +21,7 @@
     background-color: v.$success;
 }
 
-.center-btn {
-    position: absolute;
-    top: -30px;
-    right: f.subtract(50%, 25px);
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-}
+
 
 .floating-container {
     border-top: none;

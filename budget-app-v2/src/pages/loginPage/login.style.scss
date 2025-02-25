@@ -1,7 +1,7 @@
 @use '@scss/variables' as v;
 .login-container{
     height: 99%;
-    position: relative;
+    // position: relative;
 }
 
 .header-container{
@@ -11,11 +11,15 @@
 }
 
 .login-section{
-    padding: 0.8em;
+    padding: 0.5em;
+    margin: 0.3em;
+    padding-bottom: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    // border: 1px solid v.$grey;
+    // border-radius: 0.5em;
 }
 
 .login{
@@ -24,9 +28,4 @@
 .login-btn{
     margin-top: 1em;
     width:100%
-}
-.login-add-expense{
-    top:0px !important;
-    bottom: 300px !important;
-    right:1em !important;
 }

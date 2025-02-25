@@ -5,9 +5,10 @@ import {
   H1,
   InputField,
   Button,
-  AddExpenses,
 } from "$components";
 import { ITEM_TYPES } from "$interfaces";
+import {QuickAddExpenses} from "$pages";
+
 
 const LoginPage = () => {
   return (
@@ -26,7 +27,7 @@ const LoginPage = () => {
           className="login-btn"
         />
       </section>
-      <AddExpenses customClass="login-add-expense"/>
+      <QuickAddExpenses/>
     </div>
   );
 };

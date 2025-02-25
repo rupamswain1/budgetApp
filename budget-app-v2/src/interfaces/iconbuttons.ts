@@ -6,6 +6,8 @@ export interface IconButtonProps {
     name: string;
     handleClick?: () => void;
     isNameVisible?: boolean;
+    iconColor?:string;
+    onClick?:()=>void;
   }
 
 export type PartialIButtonProps = Partial<IconButtonProps>;

@@ -7,7 +7,8 @@ const AddExpenses: React.FC<PartialIButtonProps> = ({
   isActive = true,
   name="Add",
   Icon=LuReceiptIndianRupee,
-  customClass=""
+  customClass="",
+  onClick
 }) => {
   return (
     <IconButton
@@ -17,6 +18,8 @@ const AddExpenses: React.FC<PartialIButtonProps> = ({
       name={name}
       customClass={"center-btn nav-btn-selected "+customClass}
       isNameVisible = {false}
+      iconColor="white"
+      handleClick={onClick}
     />
   );
 };

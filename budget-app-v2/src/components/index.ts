@@ -6,3 +6,4 @@ export * from "./common/header/Header";
 export {default as InputField} from './common/inputField/InputField';
 export {default as Button} from './common/button/Button';
 export {default as AddExpenses} from './common/button/AddExpenses';
+export {default as Modal } from "./modal/Modal";
