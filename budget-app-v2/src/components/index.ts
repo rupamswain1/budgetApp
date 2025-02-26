@@ -4,6 +4,7 @@ export { default as IconButton } from "./common/iconButton/IconButton";
 export { default as DummyButton } from "./common/iconButton/DummyButton";
 export * from "./common/header/Header";
 export {default as InputField} from './common/inputField/InputField';
+export {default as Dropdown} from './common/inputField/DropDown';
 export {default as Button} from './common/button/Button';
 export {default as AddExpenses} from './common/button/AddExpenses';
 export {default as Modal } from "./modal/Modal";
