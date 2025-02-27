@@ -10,6 +10,7 @@ interface DropdownProps {
 
 const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
   ({ label, name, className = "", options }, ref) => {
+    console.log("Dropdown")
     return (
       <div className={`label-container select-container ${className}`}>
         <label htmlFor={name} className="input-label">

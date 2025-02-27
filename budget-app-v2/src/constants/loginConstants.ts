@@ -18,6 +18,15 @@ export const ADD_EXPENSES = {
     },
     PRICE:{
         NAME:"Price"
+    },
+    CATEGORY:{
+        NAME:"Category"
+    },
+    PAYMENT_METHOD:{
+        NAME:"Payment Method"
+    },
+    ADD_EXPENSES:{
+        NAME:"Add Expense"
     }
 }
 export enum EXPENSES_CATEGORY {

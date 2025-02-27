@@ -10,6 +10,7 @@ const AddExpenses: React.FC<PartialIButtonProps> = ({
   customClass="",
   onClick
 }) => {
+  console.log("AddExpenses")
   return (
     <IconButton
       id={id}

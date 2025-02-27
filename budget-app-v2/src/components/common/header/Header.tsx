@@ -1,6 +1,7 @@
 import { itemType, ITEM_TYPES } from "$interfaces";
 import "./header.style.scss";
 export const H1 = ({ text, type, className }: { text: string; type: itemType; className?:string }) => {
+  console.log("H1")
   return (
     <h1
       className={`${
@@ -13,6 +14,7 @@ export const H1 = ({ text, type, className }: { text: string; type: itemType; cl
 };
 
 export const H1lg = ({ text, type }: { text: string; type: itemType }) => {
+  console.log("H1lg")
   return (
     <h1
       className={`${
@@ -25,6 +27,7 @@ export const H1lg = ({ text, type }: { text: string; type: itemType }) => {
 };
 
 export const H2 = ({ text, type }: { text: string; type: itemType }) => {
+  console.log("H2");
   return (
     <h2
       className={`${

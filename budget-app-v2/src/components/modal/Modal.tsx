@@ -10,6 +10,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isDisplayed, onClose, children }) => {
+  console.log("Modal")
   const modalRoot = document.getElementById("modals") as HTMLElement;
   if (!isDisplayed) return null;
   return ReactDOM.createPortal(

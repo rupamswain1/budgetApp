@@ -45,6 +45,7 @@ const NavBar = () => {
       logo: CiSettings,
     },
   ];
+  console.log("Navbar")
   return (
     <nav className="nav-container">
       {navItems.map((item) => {

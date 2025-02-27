@@ -11,8 +11,9 @@ const IconButton: React.FC<IconButtonProps> = ({
   handleClick,
   isNameVisible,
   iconColor
-}) => (
-  <button
+}) => {
+  console.log("IconButton")
+  return <button
     key={id}
     className={`nav-btn ${isActive ? "nav-btn-selected" : ""} ${customClass}`}
     onClick={handleClick}
@@ -27,6 +28,6 @@ const IconButton: React.FC<IconButtonProps> = ({
       )}
     </div>
   </button>
-);
+};
 
 export default IconButton;

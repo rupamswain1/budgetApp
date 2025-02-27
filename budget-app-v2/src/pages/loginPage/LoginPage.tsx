@@ -11,6 +11,7 @@ import {QuickAddExpenses} from "$pages";
 
 
 const LoginPage = () => {
+  console.log("LoginPage")
   return (
     <div className="login-container">
       <header className="header-container">
