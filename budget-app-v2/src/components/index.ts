@@ -8,3 +8,4 @@ export {default as Dropdown} from './common/inputField/DropDown';
 export {default as Button} from './common/button/Button';
 export {default as AddExpenses} from './common/button/AddExpenses';
 export {default as Modal } from "./modal/Modal";
+export {default as AddExpensesComponent} from "./addExpenses/AddExpenses";
