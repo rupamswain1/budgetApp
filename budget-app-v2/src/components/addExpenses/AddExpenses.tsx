@@ -1,14 +1,19 @@
-import { ADD_EXPENSES, EXPENSES_CATEGORY } from "$constants";
+import { ADD_EXPENSES, EXPENSES_CATEGORY, PAYMENT_METHOD } from "$constants";
 import { Button, Dropdown, H1, InputField } from "$components";
 import { ITEM_TYPES } from "$interfaces";
 import { useMemo } from "react";
 import './addExpenses.style.scss';
+
 
 const AddExpenses:React.FC = () =>{
  console.log("AddExpenses")   
  const options = useMemo(() => {
   return Object.values(EXPENSES_CATEGORY);
 }, []);
+
+const paymentOptions = useMemo(()=>{
+  return Object.values(PAYMENT_METHOD)
+},[])
  return <div className="expense-container">
           <H1 text="Add Expense" type="primary" className="expense-header" />
           <InputField
@@ -32,7 +37,7 @@ const AddExpenses:React.FC = () =>{
             name={ADD_EXPENSES.CATEGORY.NAME}
           />
           <Dropdown
-            options={options}
+            options={paymentOptions}
             label={ADD_EXPENSES.PAYMENT_METHOD.NAME}
             name={ADD_EXPENSES.PAYMENT_METHOD.NAME}
           />

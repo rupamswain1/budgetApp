@@ -1,0 +1,31 @@
+import fetchUtil from "./hooks/fetchUtil";
+import Cookies from "js-cookie";
+interface UserAuth {
+  userName: string;
+}
+
+const userAuth = async ({ userName }: UserAuth) => {
+  const url = userAuth + userName;
+  const onSuccess = (response) => {
+    Cookies.set("session_id", response.data.token, {
+      expires: 7,
+      secure: true,
+    });
+  };
+  const onFailure = (response) => {
+    console.log({ response });
+  };
+  const { exec } = fetchUtil({
+    method: "GET",
+    url,
+    callback: onSuccess,
+    onFailure,
+  });
+  const { apiFailed, apiPending, apiSuccess, responseData } = await exec();
+  console.log({ apiFailed,
+    apiPending,
+    apiSuccess,})
+   return {responseData,apiFailed};
+};
+
+export default userAuth;
