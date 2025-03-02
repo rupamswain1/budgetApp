@@ -1,0 +1,251 @@
+
+function doGet(e) {
+  const user = validateToken(e);
+  if (user === null) {
+    return ContentService.createTextOutput(JSON.stringify({ error: "Invalid token" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  const action = e.parameter.action;
+  const month = e.parameter.month;
+  const year = e.parameter.year;
+  if (action === "getBudget") {
+    return getBudget(month, year);
+  } else if (action === "getExpenses") {
+    return getExpenses(month, year);
+  }
+  else {
+    return ContentService.createTextOutput(JSON.stringify({ error: "Invalid action" }))
+      .setMimeType(ContentService.MimeType.JSON)
+  }
+}
+
+function doPost(e) {
+
+  const action = e.parameter.action;
+  const contents = JSON.parse(e.postData.contents);
+  const data = contents.payload;
+  if (action === "login") {
+    return login(data.username);
+  }
+  const user = validateToken(e);;
+  if (user === null) {
+    return ContentService.createTextOutput(JSON.stringify({ error: "Invalid token" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === "addBudget") {
+    return addBudget(data, user);
+  } else if (action === "addExpense") {
+    return addExpense(data, user);
+  } else {
+    return ContentService.createTextOutput(JSON.stringify({ error: "Invalid action" }))
+      .setMimeType(ContentService.MimeType.JSON)
+  }
+}
+
+function getBearerToken(e) {
+  // First, check if the token is in the request headers
+  if (e.requestHeaders && e.requestHeaders.Authorization) {
+    const authHeader = e.requestHeaders.Authorization;
+    if (authHeader.startsWith("Bearer ")) {
+      return authHeader.substring(7); // Remove "Bearer " prefix
+    }
+  }
+
+  // Second, check if the token is passed as a URL parameter (e.g., ?token=xyz)
+  if (e.parameter && e.parameter.token) {
+    return e.parameter.token;
+  }
+
+  // Third, check if the token is inside the POST body
+  if (e.postData) {
+    try {
+      const requestData = JSON.parse(e.postData.contents);
+      if (requestData.token) {
+        return requestData.token;
+      }
+    } catch (err) {
+      throw new Error("token err",err);
+    }
+  }
+
+  return null; // Return null if no valid token is found
+}
+
+
+//check token is valid
+function validateToken(e) {
+  const token = getBearerToken(e);
+  if (!token) {
+    return null
+  }
+
+  const user = decryptUsername(token);
+  if (!user && !validateUser(user)) {
+    return null;
+  }
+  return user; // Return the valid username
+
+
+}
+
+// Login function to verify user and return encrypted username
+function login(username) {
+  if (!validateUser(username)) {
+    return ContentService.createTextOutput(JSON.stringify({ error: "Invalid username" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const encryptedUser = encryptUsername(username);
+  return ContentService.createTextOutput(JSON.stringify({ token: encryptedUser }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Validate if the user exists in the Users sheet
+function validateUser(user) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Users");
+  if (!sheet) return false;
+
+  const lastRow = sheet.getLastRow();
+  if (lastRow <= 1) {
+    // No data beyond the header row
+    return false;
+  }
+
+  const users = sheet.getRange(2, 1, lastRow - 1).getValues().flat();
+  return users.includes(user);
+}
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+// Fetch budget by month and year
+
+function getBudget(month, year) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Budget");
+  const lastRow = sheet.getLastRow();
+  let processedData = {}
+
+  if (lastRow <= 1) {
+    // No data beyond the header row
+  }
+  else {
+    const data = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).getValues();
+    const filtered = data.filter(row => {
+      const date = new Date(row[0]);
+      return date.getMonth() + 1 === parseInt(month) && date.getFullYear() === parseInt(year);
+    });
+    if (filtered.length) {
+      processedData.date = formatDate(filtered[0][0]);
+      processedData.amount = filtered[0][1];
+      processedData.createdBy = filtered[0][2];
+      processedData.createdOn = formatDate(filtered[0][3]);
+    }
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({ budget: processedData }))
+    .setMimeType(ContentService.MimeType.JSON)
+}
+
+// Fetch expenses by month and year
+function getExpenses(month, year) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Expenses");
+  const lastRow = sheet.getLastRow();
+  let processedData = [];
+  let totalExpenseAmount = 0;
+  if (lastRow <= 1) {
+    // No data beyond the header row
+  }
+  else {
+    const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+    const filtered = data.filter(row => {
+      const date = new Date(row[1]);
+      return date.getMonth() + 1 === parseInt(month) && date.getFullYear() === parseInt(year);
+    });
+    if (filtered.length) {
+      filtered.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+      processedData = filtered.map((data) => {
+        totalExpenseAmount = totalExpenseAmount + data[3]
+        return {
+          id: data[0],
+          date: formatDate(data[1]),
+          itemName: data[2],
+          price: data[3],
+          paidBy: data[4],
+          createdBy: data[5],
+          category: data[6],
+          paymentMethod: data[7],
+          createdOn: data[8]
+        }
+      })
+    }
+  }
+  return ContentService.createTextOutput(JSON.stringify({ expenses: processedData, totalExpenseAmount }))
+    .setMimeType(ContentService.MimeType.JSON)
+}
+
+
+
+// Add a new budget
+function addBudget(data, user) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Budget");
+  sheet.appendRow([data.date, data.budget, user, new Date()]);
+  return ContentService.createTextOutput(JSON.stringify({ success: true }))
+    .setMimeType(ContentService.MimeType.JSON)
+}
+
+// Add multiple expenses with an ID
+function addExpense(dataArray, user) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Expenses");
+  let newRows = [];
+  let lastRow = sheet.getLastRow(); // Get the last row number
+
+  dataArray.forEach((data, index) => {
+    let newId = lastRow + index + 1; // Calculate ID based on row number
+    newRows.push([newId, data.date, data.item, data.price, data.paidBy, user, data.category, data.paymentMethod, new Date()]);
+  });
+
+  if (newRows.length > 0) {
+    sheet.getRange(lastRow + 1, 1, newRows.length, newRows[0].length).setValues(newRows);
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({ success: true, recordsAdded: newRows.length }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Encrypt username using Base64 + HMAC-SHA256 for added security
+function encryptUsername(username) {
+  const SECRET_KEY = "your-very-secure-random-key"; // Store securely
+  const encodedUsername = Utilities.base64Encode(username);
+  const hash = Utilities.computeHmacSha256Signature(encodedUsername, SECRET_KEY, Utilities.Charset.UTF_8);
+  const hashBase64 = Utilities.base64Encode(hash);
+  return `${encodedUsername}.${hashBase64}`;
+}
+
+// Decrypt username and validate HMAC
+function decryptUsername(token) {
+    const SECRET_KEY = "your-very-secure-random-key"; // Store securely
+  const parts = token.split(".");
+  if (parts.length !== 2) {
+    throw new Error("Invalid token format");
+  }
+
+  const encodedUsername = parts[0];
+  const hashBase64 = parts[1];
+
+  // Decode and verify integrity
+  const expectedHash = Utilities.computeHmacSha256Signature(encodedUsername, SECRET_KEY, Utilities.Charset.UTF_8);
+  if (Utilities.base64Encode(expectedHash) !== hashBase64) {
+    throw new Error("Token validation failed");
+  }
+
+  return Utilities.newBlob(Utilities.base64Decode(encodedUsername)).getDataAsString();
+}
+
+
+
+
+
+

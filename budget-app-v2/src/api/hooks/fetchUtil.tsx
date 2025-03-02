@@ -11,7 +11,9 @@ const fetchUtil = ({ method, url, body, callback, onFailure }: IuseFetch) => {
     apiFailed: boolean = false,
     apiPending: boolean = false;
   let responseData = null;
+  console.log("inside fetch utils")
   const exec = async () => {
+    console.log("executing",url)
     try {
       apiPending = true;
       const response = await fetch(url, {
@@ -21,9 +23,15 @@ const fetchUtil = ({ method, url, body, callback, onFailure }: IuseFetch) => {
           : {}),
       });
       if (response.ok) {
-        responseData = response.json();
-        apiSuccess = true;
-        callback(responseData);
+        console.log({response})
+        responseData = await response.json();
+        if(!responseData.error){
+          apiSuccess = true;
+          callback(responseData);
+        }
+        else{
+          apiFailed = true;
+        }
       } else {
         console.log("apifailed");
         // onFailure(response.error);

@@ -9,6 +9,61 @@
 		{
 			"name": "get budget",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4/exec?action=getBudget&month=02&year=2025&&token=UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "getBudget"
+						},
+						{
+							"key": "month",
+							"value": "02"
+						},
+						{
+							"key": "year",
+							"value": "2025"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "token",
+							"value": "UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE="
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get budget-Depricated",
+			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -50,11 +105,21 @@
 		{
 			"name": "Add budget",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " { \"date\": \"2024-11-01\", \"budget\": 5000 }",
+					"raw": "{\n    \"payload\": {\n        \"date\": \"2025-11-01\",\n        \"budget\": 5000\n    },\n    \"token\": \"UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,7 +127,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://script.google.com/macros/s/AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A/exec?action=addBudget&user=Rupam",
+					"raw": "https://script.google.com/macros/s/AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4/exec?action=addBudget",
 					"protocol": "https",
 					"host": [
 						"script",
@@ -72,17 +137,13 @@
 					"path": [
 						"macros",
 						"s",
-						"AKfycbwCeHG0lORn8skSqZpjoVMLaPCt4URsS1DfSG1COoAqO0UhVGB-qjOjzLbK19Y7Vv4b1A",
+						"AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4",
 						"exec"
 					],
 					"query": [
 						{
 							"key": "action",
 							"value": "addBudget"
-						},
-						{
-							"key": "user",
-							"value": "Rupam"
 						}
 					]
 				}
@@ -90,7 +151,7 @@
 			"response": []
 		},
 		{
-			"name": "Add expense",
+			"name": "Add expense-depricated",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -132,7 +193,103 @@
 			"response": []
 		},
 		{
-			"name": "Get expense",
+			"name": "Add expense",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "UnVwYW0=.2pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vf=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payload\": [\n        {\n            \"date\": \"2024-02-01\",\n            \"item\": \"Groceries\",\n            \"price\": 100,\n            \"paidBy\": \"Alice\",\n            \"category\": \"Groceries\",\n            \"paymentMethod\": \"Cash\"\n        },\n        {\n            \"date\": \"2024-02-02\",\n            \"item\": \"Fuel\",\n            \"price\": 50,\n            \"paidBy\": \"Bob\",\n            \"category\": \"Travel\",\n            \"paymentMethod\": \"Card\"\n        },\n        {\n            \"date\": \"2024-02-03\",\n            \"item\": \"Dinner\",\n            \"price\": 75,\n            \"paidBy\": \"Charlie\",\n            \"category\": \"Dining\",\n            \"paymentMethod\": \"Cash\"\n        }\n    ],\n    \"token\":\"UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4/exec?action=addExpense",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "addExpense"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add expense-depricated",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "UnVwYW0=.2pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vf=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payload\": [\n        {\n            \"date\": \"2024-02-01\",\n            \"item\": \"Groceries\",\n            \"price\": 100,\n            \"paidBy\": \"Alice\",\n            \"category\": \"Groceries\",\n            \"paymentMethod\": \"Cash\"\n        },\n        {\n            \"date\": \"2024-02-02\",\n            \"item\": \"Fuel\",\n            \"price\": 50,\n            \"paidBy\": \"Bob\",\n            \"category\": \"Travel\",\n            \"paymentMethod\": \"Card\"\n        },\n        {\n            \"date\": \"2024-02-03\",\n            \"item\": \"Dinner\",\n            \"price\": 75,\n            \"paidBy\": \"Charlie\",\n            \"category\": \"Dining\",\n            \"paymentMethod\": \"Cash\"\n        }\n    ],\n    \"token\":\"UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4/exec?action=addExpense",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "addExpense"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expense-depricated",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -173,7 +330,96 @@
 			"response": []
 		},
 		{
-			"name": "Validate user",
+			"name": "Get expense",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "UnVwYWo=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/0o=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4/exec?action=getExpenses&month=02&year=2025&token=UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE=",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "getExpenses"
+						},
+						{
+							"key": "month",
+							"value": "02"
+						},
+						{
+							"key": "year",
+							"value": "2025"
+						},
+						{
+							"key": "token",
+							"value": "UnVwYW0=.3pvfT9VOsn1qNkjfZoun5bMYZKT0JbimSdImQIuB/vE="
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"Rupam\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://script.google.com/macros/s/AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4/exec?action=login",
+					"protocol": "https",
+					"host": [
+						"script",
+						"google",
+						"com"
+					],
+					"path": [
+						"macros",
+						"s",
+						"AKfycbwG-d4PNF7TTr_HoRg_3kg1lyKOUEMxfaLVK5SEItP7IqFMrKpAAH9F2B5quSMxWuO4",
+						"exec"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "login"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate user-depricated",
 			"request": {
 				"method": "GET",
 				"header": [],

@@ -1,7 +1,7 @@
 //implement createSelector as well
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userAuth from "api/userAuth";
+import userAuth from "../api/userAuth";
 import Cookies from "js-cookie";
 interface AuthState {
     token: string | null;
@@ -12,8 +12,10 @@ interface AuthState {
 export const loginUser = createAsyncThunk(
     "auth/loginUser",
     async(userName:string,{rejectWithValue})=>{
-        const {responseData} = await userAuth({userName})
-        if(responseData){
+        console.log("inside loginUser",userName)
+        const {responseData, apiFailed, apiSuccess} = await userAuth({userName})
+        console.log({responseData})
+        if(responseData && apiSuccess){
             return responseData;
         }
         return rejectWithValue("api failed")
@@ -33,5 +35,21 @@ const authSlice = createSlice({
             Cookies.remove("session_id");
         }
     },
-    //complete builder part
+    extraReducers:(builder) =>{
+        builder.addCase(loginUser.pending,(state)=>{
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(loginUser.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.token = action.payload
+        })
+        .addCase(loginUser.rejected,(state, action)=>{
+            state.loading = false;
+            state.error = action.payload as string;
+        })
+    }
 })
+
+export const {logout} = authSlice.actions;
+export default authSlice.reducer;
