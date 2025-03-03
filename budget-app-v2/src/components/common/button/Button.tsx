@@ -21,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
       className={`kharcha-btn ${type}-btn ${className} ${!isEnabled && "btn-disabled"}`}
       onClick={onClick}
       key={name}
+      disabled={!isEnabled}
     >
       {name}
     </button>

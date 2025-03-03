@@ -1,32 +1,35 @@
 import { userAuthUrl } from "$constants";
 import fetchUtil from "./hooks/fetchUtil";
 import Cookies from "js-cookie";
+import { responseType } from "$interfaces";
 interface UserAuth {
   userName: string;
 }
 
 const userAuth = async ({ userName }: UserAuth) => {
-  const url = userAuthUrl + userName;
-  const onSuccess = (response) => {
-    console.log({response})
-    if (!response.error) {
-      Cookies.set("session_id", response.data.token, {
+  const url = userAuthUrl;
+  const onSuccess = (response: responseType | null) => {
+    console.log({ response });
+    if (!response?.error && response?.token) {
+      Cookies.set("session_id", response.token, {
         expires: 7,
         secure: true,
       });
     }
   };
-  const onFailure = (response) => {
-    console.log({ response });
+  const onFailure = (response: responseType | string) => {
+    console.log("onFailure ",{ response });
   };
   const { exec } = fetchUtil({
-    method: "GET",
+    method: "POST",
     url,
     callback: onSuccess,
     onFailure,
+    body: {
+      username: userName,
+    },
   });
-  const { apiFailed, apiPending, apiSuccess, responseData } = await exec();
-  console.log({ apiFailed, apiPending, apiSuccess });
+  const { apiFailed, apiSuccess, responseData } = await exec();
   return { responseData, apiFailed, apiSuccess };
 };
 

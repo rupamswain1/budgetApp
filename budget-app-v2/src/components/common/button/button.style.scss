@@ -33,3 +33,6 @@
     justify-content: center;
     z-index: 20;
 }
+.btn-disabled{
+    background-color: v.$disabled-success;
+}
