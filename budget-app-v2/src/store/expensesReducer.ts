@@ -1,24 +1,34 @@
-import { EXPENSES_CATEGORY, PAYMENT_METHOD } from "$constants";
 
-interface ExpenseState{
-    newExpenses: newExpense[];
-    expenses:Expenses[];
-    budget:number;
-    remainingBudget:number;
-    currentMonth:number;
-    currentYear:number
-}
+import { ExpenseState } from "$interfaces";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface newExpense{
-    date:Date;
-    itemName:string;
-    price: number;
-    category : EXPENSES_CATEGORY;
-    paymentMethod: PAYMENT_METHOD
-}
+const expenseSclice = createSlice({
+    name:"expense",
+    initialState:{
+        newExpenses:[],
+        expenses:[],
+        budget:0,
+        remainingBudget:0,
+        currentDate:new Date().getDate(),
+        currentMonth: new Date().getMonth()+1,
+        currentYear: new Date().getFullYear()
+    } as ExpenseState,
+    reducers:{
+        addNewExpense:(state, action)=>{
+           const isExpenseAvailable = state.newExpenses.find((expense)=>expense.id===action?.payload?.id)
+           if(isExpenseAvailable){
+                const newExpenses = state.newExpenses.map((expenses)=>expenses.id===action.payload.id?action.payload:expenses)
+                state.newExpenses = newExpenses;
+            }
+           else{
+                state.newExpenses = [...state.newExpenses,action.payload]
+           }
+        },
+        deleteNewExpense:(state, action)=>{
+            state.newExpenses = state.newExpenses.filter((expense)=>expense.id!==action.payload.id);
+        },
+    }
+})
 
-interface Expenses extends newExpense{
-    id:number;
-    paidBy:string;
-    createdBy:string;
-}
+export const { addNewExpense, deleteNewExpense } = expenseSclice.actions;
+export default expenseSclice.reducer;

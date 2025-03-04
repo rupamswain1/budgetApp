@@ -11,28 +11,33 @@ export const loginConstant = {
 
 export const ADD_EXPENSES = {
     DATE:{
-        NAME:"Date"
+        LABEL:"Date",
+        NAME:"date"
     },
     ITEM:{
-        NAME:"Item Name"
+        LABEL:"Item Name",
+        NAME:"itemName"
     },
     PRICE:{
-        NAME:"Price"
+        LABEL:"Price",
+        NAME:"price"
     },
     CATEGORY:{
-        NAME:"Category"
+        LABEL:"Category",
+        NAME:"category"
     },
     PAYMENT_METHOD:{
-        NAME:"Payment Method"
+        LABEL:"Payment Method",
+        NAME:"paymentMethod"
     },
     ADD_EXPENSES:{
         NAME:"Add Expense"
     }
 }
 export enum EXPENSES_CATEGORY {
+    FOOD = "Food & Groceries",
     HOUSING = "Housing",
     TRANSPORTATION = "Transportation",
-    FOOD = "Food & Groceries",
     HEALTHCARE = "Healthcare",
     UTILITIES = "Utilities",
     INSURANCE = "Insurance",
