@@ -5,7 +5,8 @@ export const store = configureStore({
     reducer:{
         auth:authReducer,
         expense:expenseReducer
-    }
+    },
+    devTools: process.env.NODE_ENV !== "production",
 })
 
 export type RootState = ReturnType<typeof store.getState>;

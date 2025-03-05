@@ -10,7 +10,8 @@ export default defineConfig({
       '$interfaces':path.resolve(__dirname, 'src/interfaces'),
       '$components':path.resolve(__dirname, 'src/components'),
       '$pages':path.resolve(__dirname, 'src/pages'),
-      '$constants':path.resolve(__dirname,'src/constants')
+      '$constants':path.resolve(__dirname,'src/constants'),
+      '$hooks':path.resolve(__dirname,'src/hooks')
     }
   }
 })

@@ -11,7 +11,8 @@
       "$interfaces":["interfaces/index.ts"],
       "$components":["components/index.ts"],
       "$pages":["pages/index.ts"],
-      "$constants":["constants/index.ts"]
+      "$constants":["constants/index.ts"],
+      "$hooks":["hooks/index.ts"]
     },
     "types":["node","vite/client"],
     "jsx":"react",

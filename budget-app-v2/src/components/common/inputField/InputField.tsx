@@ -5,7 +5,7 @@ interface InputFieldProps {
   label: string;
   name: string;
   type: string;
-  value:string|Date;
+  value:string|number|Date|null;
   className?: string;
   onChangeHandler: (e:React.ChangeEvent<HTMLInputElement>)=>void;
 }

@@ -10,7 +10,7 @@ const LoginSection = () => {
   const { loading, error } = useSelector((state: RootState) => state.auth);
   const [disableLogin, setDisableLogin] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
-  const onChangeHandler = useCallback((e) => {
+  const onChangeHandler = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
     if (e.target.value.length > 0) {
       setDisableLogin(false);
@@ -33,6 +33,7 @@ const LoginSection = () => {
         label="User Name or Email"
         type="text"
         onChangeHandler={onChangeHandler}
+        value={userName}
       />
       <Button
         name="Login"

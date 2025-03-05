@@ -1,20 +1,27 @@
+import { useDispatch } from "react-redux";
+import { addNewExpense } from "../../store/expensesReducer";
+import type { AppDispatch } from "store/store";
 import { ADD_EXPENSES, EXPENSES_CATEGORY, PAYMENT_METHOD } from "$constants";
 import { Button, Dropdown, H1, InputField } from "$components";
-import { NewExpense } from "$interfaces";
-import { ITEM_TYPES } from "$interfaces";
-import { useCallback, useMemo, useState } from "react";
+import { NewExpense, ITEM_TYPES } from "$interfaces";
+import { UseFormInput } from "$hooks";
+import { useCallback, useEffect, useMemo, useState, useId } from "react";
 import "./addExpenses.style.scss";
 
 const AddExpenses: React.FC = () => {
   console.log("AddExpenses");
-  const [expense, setExpense] = useState<NewExpense>({
-    id: 0,
-    date: new Date(),
+  const [expense, handleExpenseInput] = UseFormInput<NewExpense>({
+    id: useId(),
+    date: new Date().toISOString().split("T")[0],
     itemName: "",
-    price: 0,
+    price: null,
     category: EXPENSES_CATEGORY.FOOD,
     paymentMethod: PAYMENT_METHOD.CREDIT_CARD,
   });
+  const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const options = useMemo(() => {
     return Object.values(EXPENSES_CATEGORY);
   }, []);
@@ -23,10 +30,32 @@ const AddExpenses: React.FC = () => {
     return Object.values(PAYMENT_METHOD);
   }, []);
 
-  const handleExpenseInput = useCallback((e:React.ChangeEvent<HTMLInputElement|HTMLSelectElement>)=>{
-    setExpense((prevValue)=>({...prevValue, [e.target.name]:e.target.value}))
-  },[])
-  console.log({expense})
+  useEffect(() => {
+    if (
+      expense.date &&
+      expense.itemName &&
+      expense.itemName.length > 1 &&
+      expense.price &&
+      expense.price > 0 &&
+      expense.category &&
+      expense.paymentMethod
+    ) {
+      setEnableSubmit(true);
+    } else {
+      setEnableSubmit(false);
+    }
+  }, [
+    expense.date,
+    expense.itemName,
+    expense.price,
+    expense.category,
+    expense.paymentMethod,
+  ]);
+
+  const handleSubmit = useCallback(() => {
+    dispatch(addNewExpense(expense));
+  }, [expense]);
+  console.log({ expense });
 
   return (
     <div className="expense-container">
@@ -50,7 +79,7 @@ const AddExpenses: React.FC = () => {
         name={ADD_EXPENSES.PRICE.NAME}
         type="number"
         onChangeHandler={handleExpenseInput}
-        value={expense.itemName}
+        value={expense.price}
       />
       <Dropdown
         options={options}
@@ -70,8 +99,9 @@ const AddExpenses: React.FC = () => {
       <Button
         name={ADD_EXPENSES.ADD_EXPENSES.NAME}
         type={ITEM_TYPES.PRIMARY}
-        onClick={() => {}}
+        onClick={handleSubmit}
         className="expense-btn"
+        isEnabled={enableSubmit}
       />
       {/* once a expense is added display a table, with all data and total at bottom, give option to edit and delete */}
       {/* Add more - button */}

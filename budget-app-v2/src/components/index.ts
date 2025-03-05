@@ -11,3 +11,4 @@ export {default as AddExpenses} from './common/button/AddExpenses';
 export {default as Modal } from "./modal/Modal";
 export {default as AddExpensesComponent} from "./addExpenses/AddExpenses";
 export {default as LoginSection} from "./loginSection/LoginSection";
+export {default as ExpenseSummary} from "./expenseSummary/ExpenseSummary";
