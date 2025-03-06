@@ -86,14 +86,14 @@ const AddExpenses: React.FC = () => {
         label={ADD_EXPENSES.CATEGORY.LABEL}
         name={ADD_EXPENSES.CATEGORY.NAME}
         onChangeHandler={handleExpenseInput}
-        value={expense.itemName}
+        value={expense.category}
       />
       <Dropdown
         options={paymentOptions}
         label={ADD_EXPENSES.PAYMENT_METHOD.LABEL}
         name={ADD_EXPENSES.PAYMENT_METHOD.NAME}
         onChangeHandler={handleExpenseInput}
-        value={expense.itemName}
+        value={expense.paymentMethod}
       />
       {/* Add Button */}
       <Button

@@ -39,4 +39,7 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
   }
 );
 
-export default React.memo(Dropdown);
+export default React.memo(
+  Dropdown,
+  (prevProps, nextProps) => prevProps.value === nextProps.value
+);

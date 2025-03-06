@@ -1,5 +1,5 @@
 import "./quickAddExpense.style.scss";
-import { AddExpenses, Modal, AddExpensesComponent, ExpenseSummary } from "$components";
+import { AddExpenses, AddExpensesModal } from "$components";
 import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
@@ -21,9 +21,10 @@ const QuickAddExpenses = () => {
   return (
     <>
       <AddExpenses customClass="login-add-expense" onClick={showModal} />
-      <Modal isDisplayed={showQuickAdd} onClose={onClose}>
-        {newExpenses.length > 0 ? <ExpenseSummary expenses={newExpenses}/> : <AddExpensesComponent />}
-      </Modal>
+      <AddExpensesModal
+        displayAddModal={showQuickAdd}
+        onCloseModal={onClose}
+      />
     </>
   );
 };

@@ -1,0 +1,15 @@
+@use '@scss/variables' as v;
+.expense-grid{
+    --ag-background-color: #fff;
+    --ag-header-background-color: #4ad66d;
+    --ag-even-row-background-color:#b7efc5;
+    --ag-font-family: "Arial, sans-serif";
+    
+  }
+.ag-header-cell-text{
+    font-size: 1rem;
+}
+.ag-cell{
+    text-align: center;
+    padding:0px !important;
+}

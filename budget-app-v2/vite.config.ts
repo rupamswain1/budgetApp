@@ -11,7 +11,8 @@ export default defineConfig({
       '$components':path.resolve(__dirname, 'src/components'),
       '$pages':path.resolve(__dirname, 'src/pages'),
       '$constants':path.resolve(__dirname,'src/constants'),
-      '$hooks':path.resolve(__dirname,'src/hooks')
+      '$hooks':path.resolve(__dirname,'src/hooks'),
+      '$context':path.resolve(__dirname,'src/context')
     }
   }
 })
