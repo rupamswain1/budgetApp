@@ -23,3 +23,9 @@ export interface Expenses extends NewExpense{
     paidBy:string;
     createdBy:string;
 }
+
+export enum screenNames{
+    ADD,
+    SUMMARY,
+    LOGIN
+  }

@@ -3,15 +3,21 @@ import { addNewExpense } from "../../store/expensesReducer";
 import type { AppDispatch } from "store/store";
 import { ADD_EXPENSES, EXPENSES_CATEGORY, PAYMENT_METHOD } from "$constants";
 import { Button, Dropdown, H1, InputField } from "$components";
-import { NewExpense, ITEM_TYPES } from "$interfaces";
+import { NewExpense, ITEM_TYPES, screenNames } from "$interfaces";
 import { UseFormInput } from "$hooks";
 import { useCallback, useEffect, useMemo, useState, useId } from "react";
 import "./addExpenses.style.scss";
 
-const AddExpenses: React.FC = () => {
+interface AddExpensesProps{
+  handleNext:(screenName:screenNames)=>void,
+  selectedExpense:NewExpense|null
+}
+
+const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) => {
   console.log("AddExpenses");
-  const [expense, handleExpenseInput] = UseFormInput<NewExpense>({
-    id: useId(),
+  const id = useId();
+  const [expense, handleExpenseInput] = UseFormInput<NewExpense>(selectedExpense ?? {
+    id: id,
     date: new Date().toISOString().split("T")[0],
     itemName: "",
     price: null,
@@ -54,6 +60,7 @@ const AddExpenses: React.FC = () => {
 
   const handleSubmit = useCallback(() => {
     dispatch(addNewExpense(expense));
+    handleNext(screenNames.SUMMARY);
   }, [expense]);
   console.log({ expense });
 

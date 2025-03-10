@@ -1,4 +1,11 @@
-import { Modal, AddExpensesComponent, ExpenseSummary } from "$components";
+import {
+  Modal,
+  AddExpensesComponent,
+  ExpenseSummary,
+  LoginSection,
+} from "$components";
+import { NewExpense, screenNames } from "$interfaces";
+import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 
@@ -12,15 +19,33 @@ const AddExpensesModal = ({
   const newExpenses = useSelector(
     (state: RootState) => state.expense.newExpenses
   );
-  //add state here to track the page i.e add or summary or login
-  //add can also act as edit if an expense id is available
+  const [screen, setScreen] = useState<screenNames>(screenNames.ADD);
+  const [selectedExpense, setSelectedExpense] = useState<NewExpense | null>(
+    null
+  );
   //if user is not logged in then show login
+  const handleNext = useCallback((screenName: screenNames) => {
+    setScreen(screenName);
+    setSelectedExpense(null);
+  }, []);
+  const handleEdit = useCallback(
+    (screenName: screenNames, expense: NewExpense | null) => {
+      setScreen(screenName);
+      setSelectedExpense(expense);
+    },
+    []
+  );
   return (
     <Modal isDisplayed={displayAddModal} onClose={onCloseModal}>
-      {newExpenses.length > 0 ? (
-        <ExpenseSummary expenses={newExpenses} />
+      {screen === screenNames.SUMMARY ? (
+        <ExpenseSummary expenses={newExpenses} handleExpenseEdit={handleEdit} />
+      ) : screen === screenNames.LOGIN ? (
+        <LoginSection />
       ) : (
-        <AddExpensesComponent />
+        <AddExpensesComponent
+          handleNext={handleNext}
+          selectedExpense={selectedExpense}
+        />
       )}
     </Modal>
   );

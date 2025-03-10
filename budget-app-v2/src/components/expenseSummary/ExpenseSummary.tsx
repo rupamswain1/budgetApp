@@ -1,5 +1,7 @@
+import { useDispatch } from "react-redux";
+import { deleteNewExpense } from "../../store/expensesReducer";
 import { Button, H1, Table } from "$components";
-import { ITEM_TYPES, NewExpense } from "$interfaces";
+import { ITEM_TYPES, NewExpense, screenNames } from "$interfaces";
 import { useMemo } from "react";
 import { ModuleRegistry, AllCommunityModule, ColDef } from "ag-grid-community";
 import { FiEdit2 } from "react-icons/fi";
@@ -8,9 +10,18 @@ import "./expenseSummary.style.scss";
 ModuleRegistry.registerModules([AllCommunityModule]);
 interface ExpensesSummaryProps {
   expenses: NewExpense[];
+  handleExpenseEdit: (screenName: screenNames, expenseData: NewExpense|null) => void;
 }
 
-const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({ expenses }) => {
+const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
+  expenses,
+  handleExpenseEdit,
+}) => {
+  const dispatch = useDispatch();
+  const handleEdit = (data: NewExpense) => {
+    handleExpenseEdit(screenNames.ADD, data);
+  };
+
   const columnDefinition: ColDef<NewExpense>[] = useMemo(
     () => [
       {
@@ -56,13 +67,13 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({ expenses }) => {
       {
         headerName: "Actions",
         width: 80,
-        cellRenderer: () => (
+        cellRenderer: ({ data }: { data: NewExpense }) => (
           <div className="action-btn-grid">
-            <button>
-              <FiEdit2 size={15}/>
+            <button onClick={() => handleEdit(data)}>
+              <FiEdit2 size={15} />
             </button>
-            <button>
-              <MdOutlineDelete size={15}/>
+            <button onClick={()=>dispatch(deleteNewExpense(data.id))}>
+              <MdOutlineDelete size={15} />
             </button>
           </div>
         ),
@@ -83,9 +94,9 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({ expenses }) => {
         <Button
           name="Add More"
           type={ITEM_TYPES.SECONDARY}
-          onClick={() => {}}
+          onClick={() => handleExpenseEdit(screenNames.ADD,null)}
         />
-        <Button name="Next" type={ITEM_TYPES.PRIMARY} onClick={() => {}} />
+        <Button name="Submit" type={ITEM_TYPES.PRIMARY} onClick={() => handleExpenseEdit(screenNames.LOGIN,null)} />
       </div>
     </div>
   );

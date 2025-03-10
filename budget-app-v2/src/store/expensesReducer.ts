@@ -25,7 +25,8 @@ const expenseSclice = createSlice({
            }
         },
         deleteNewExpense:(state, action)=>{
-            state.newExpenses = state.newExpenses.filter((expense)=>expense.id!==action.payload.id);
+            console.log({action})
+            state.newExpenses = state.newExpenses.filter((expense)=>expense.id!==action.payload);
         },
     }
 })
