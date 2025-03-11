@@ -3,21 +3,39 @@ import { ITEM_TYPES } from "$interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/authReducer";
 import type { RootState, AppDispatch } from "store/store";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./loginSection.style.scss";
-const LoginSection = () => {
+
+const LoginSection = ({
+  authCallback = () => {},
+}: {
+  authCallback?: () => void;
+}) => {
+
   const [userName, setUserName] = useState<string>("");
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { loading, error, token } = useSelector(
+    (state: RootState) => state.auth
+  );
   const [disableLogin, setDisableLogin] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
-  const onChangeHandler = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(e.target.value);
-    if (e.target.value.length > 0) {
-      setDisableLogin(false);
-    } else {
-      setDisableLogin(true);
+  const onChangeHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUserName(e.target.value);
+      if (e.target.value.length > 0) {
+        setDisableLogin(false);
+      } else {
+        setDisableLogin(true);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (!loading && !error && token) {
+      authCallback();
     }
-  }, []);
+  }, [loading, error]);
+  
   const handleLogin = () => {
     dispatch(loginUser(userName));
   };

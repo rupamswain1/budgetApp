@@ -5,5 +5,6 @@ export {
   PAYMENT_METHOD,
 } from "./loginConstants";
 export {
-  userAuthUrl
+  userAuthUrl,
+  addExpenseUrl
 } from './apiConstant';

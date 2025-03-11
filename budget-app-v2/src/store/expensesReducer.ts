@@ -1,6 +1,16 @@
 
 import { ExpenseState } from "$interfaces";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import useAddExpenses from "../api/useAddExpenses";
+
+export const addExpenses = createAsyncThunk(
+    "expense/addExpenses",
+    async(_,thunkApi)=>{
+       
+        const { responseData, apiFailed, apiSuccess} = await useAddExpenses(thunkApi.getState()?.expense?.newExpenses);
+        console.log( {responseData, apiFailed, apiSuccess});
+    }
+)
 
 const expenseSclice = createSlice({
     name:"expense",

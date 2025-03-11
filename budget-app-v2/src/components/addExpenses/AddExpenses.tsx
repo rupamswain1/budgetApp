@@ -110,11 +110,6 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
         className="expense-btn"
         isEnabled={enableSubmit}
       />
-      {/* once a expense is added display a table, with all data and total at bottom, give option to edit and delete */}
-      {/* Add more - button */}
-      {/* Next button */}
-
-      {/* login page with prev and submit button */}
     </div>
   );
 };

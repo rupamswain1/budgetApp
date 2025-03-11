@@ -1,66 +1,64 @@
-import { responseType } from "$interfaces";
-interface IuseFetch {
+interface IuseFetch<T> {
   method: "POST" | "GET";
   url: string;
   body?: object;
-  callback: (response: responseType|null) => void;
-  onFailure: (response: object|string) => unknown;
+  callback: (response: T | null) => void;
+  onFailure: (response: object | string) => void;
 }
 
+interface FetchUtilResult<T> {
+  apiFailed: boolean;
+  apiPending: boolean;
+  apiSuccess: boolean;
+  responseData: T | null;
+}
 
-const fetchUtil = ({ method, url, body, callback, onFailure }: IuseFetch) => {
-  let apiSuccess: boolean = false,
-    apiFailed: boolean = false,
-    apiPending: boolean = false;
-  let responseData: responseType | null = null;
+const fetchUtil = <T,>({
+  method,
+  url,
+  body,
+  callback,
+  onFailure,
+}: IuseFetch<T>) => {
   console.log("inside fetch utils");
-  const exec = async () => {
+
+  const exec = async (): Promise<FetchUtilResult<T>> => {
     console.log("executing", url);
+    let apiSuccess = false;
+    let apiFailed = false;
+    let apiPending = true;
+    let responseData: T | null = null;
+
     try {
-      apiPending = true;
       const response = await fetch(url, {
-        method: method || "GET",
-        ...(body?.constructor === Object && body !== null
-          ? { body: JSON.stringify(body) }
-          : {}),
-          redirect: 'follow',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8',
-          },
+        method, // Removed unnecessary default "GET"
+        body: body ? JSON.stringify(body) : undefined,
+        redirect: "follow",
+        headers: {
+          "Content-Type": "application/json", // Changed to JSON
+        },
       });
+
       if (response.ok) {
-        console.log({ response });
-        responseData = await response.json();
-        if (!responseData?.error) {
-          apiSuccess = true;
-          callback(responseData);
-        } else {
-          apiFailed = true;
-          onFailure(responseData);
-        }
+        responseData = (await response.json()) as T;
+        apiSuccess = true;
+        callback(responseData);
       } else {
-        console.log("apifailed");
-        // onFailure(response.error);
         apiFailed = true;
-        onFailure(await response.json());
+        const errorResponse = await response.json();
+        onFailure(errorResponse);
       }
-      apiPending = false;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
-      apiPending = false;
-      onFailure(error);
+    } catch (error) {
       apiFailed = true;
+      onFailure(error instanceof Error ? error.message : "Unknown error");
+    } finally {
+      apiPending = false;
     }
-    return {
-      apiFailed,
-      apiPending,
-      apiSuccess,
-      responseData,
-    };
+
+    return { apiFailed, apiPending, apiSuccess, responseData };
   };
-  return {
-    exec,
-  };
+
+  return { exec };
 };
 
 export default fetchUtil;
