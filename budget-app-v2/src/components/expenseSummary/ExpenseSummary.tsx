@@ -30,15 +30,13 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
         sortable: true,
         filter: true,
         width: 100,
-        // flex: 2,
       },
       {
         headerName: "Item",
-        field: "itemName",
+        field: "item",
         sortable: true,
         filter: true,
         width: 100,
-        // flex: 2,
       },
       {
         headerName: "Price",
@@ -46,7 +44,6 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
         sortable: true,
         filter: true,
         width: 100,
-        // flex: 2,
       },
       {
         headerName: "Category",
@@ -54,7 +51,6 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
         sortable: true,
         filter: true,
         width: 100,
-        // flex: 1,
       },
       {
         headerName: "Payment Method",
@@ -62,7 +58,6 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
         sortable: true,
         filter: true,
         width: 100,
-        // flex: 1,
       },
       {
         headerName: "Actions",

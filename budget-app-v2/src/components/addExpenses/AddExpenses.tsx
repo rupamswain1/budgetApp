@@ -19,7 +19,7 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
   const [expense, handleExpenseInput] = UseFormInput<NewExpense>(selectedExpense ?? {
     id: id,
     date: new Date().toISOString().split("T")[0],
-    itemName: "",
+    item: "",
     price: null,
     category: EXPENSES_CATEGORY.FOOD,
     paymentMethod: PAYMENT_METHOD.CREDIT_CARD,
@@ -39,8 +39,8 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
   useEffect(() => {
     if (
       expense.date &&
-      expense.itemName &&
-      expense.itemName.length > 1 &&
+      expense.item &&
+      expense.item.length > 1 &&
       expense.price &&
       expense.price > 0 &&
       expense.category &&
@@ -52,7 +52,7 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
     }
   }, [
     expense.date,
-    expense.itemName,
+    expense.item,
     expense.price,
     expense.category,
     expense.paymentMethod,
@@ -79,7 +79,7 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
         name={ADD_EXPENSES.ITEM.NAME}
         type="text"
         onChangeHandler={handleExpenseInput}
-        value={expense.itemName}
+        value={expense.item}
       />
       <InputField
         label={ADD_EXPENSES.PRICE.LABEL}

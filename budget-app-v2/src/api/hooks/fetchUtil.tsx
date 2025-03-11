@@ -28,15 +28,17 @@ const fetchUtil = <T,>({
     let apiFailed = false;
     let apiPending = true;
     let responseData: T | null = null;
-
+    console.log({body})
     try {
       const response = await fetch(url, {
-        method, // Removed unnecessary default "GET"
-        body: body ? JSON.stringify(body) : undefined,
-        redirect: "follow",
-        headers: {
-          "Content-Type": "application/json", // Changed to JSON
-        },
+        method: method || "GET",
+         ...(body?.constructor === Object && body !== null
+           ? { body: JSON.stringify(body) }
+           : {}),
+           redirect: 'follow',
+           headers: {
+             'Content-Type': 'text/plain;charset=utf-8',
+           },
       });
 
       if (response.ok) {
