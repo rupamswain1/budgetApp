@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk(
         console.log("inside loginUser",userName)
         const {responseData, apiFailed, apiSuccess} = await userAuth({userName})
         console.log({responseData})
-        if(responseData && apiSuccess){
+        if(responseData && apiSuccess && responseData?.token){
             return responseData as string;
         }
         return rejectWithValue("api failed")

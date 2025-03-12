@@ -8,6 +8,8 @@ export interface ExpenseState{
     currentDate:number
     currentMonth:number;
     currentYear:number;
+    isLoading:boolean;
+    error:boolean;
 }
 
 export interface NewExpense{

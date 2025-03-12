@@ -40,17 +40,21 @@ const fetchUtil = <T,>({
              'Content-Type': 'text/plain;charset=utf-8',
            },
       });
-
+    
       if (response.ok) {
+        console.log({response})
         responseData = (await response.json()) as T;
         apiSuccess = true;
         callback(responseData);
       } else {
-        apiFailed = true;
         const errorResponse = await response.json();
+        console.log("else block",errorResponse)
+        apiFailed = true;
+      
         onFailure(errorResponse);
       }
     } catch (error) {
+      console.log({error})
       apiFailed = true;
       onFailure(error instanceof Error ? error.message : "Unknown error");
     } finally {

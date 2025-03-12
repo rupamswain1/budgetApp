@@ -7,15 +7,21 @@ import { ModuleRegistry, AllCommunityModule, ColDef } from "ag-grid-community";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import "./expenseSummary.style.scss";
+import { EXPORT_SUMMARY } from "$constants";
 ModuleRegistry.registerModules([AllCommunityModule]);
 interface ExpensesSummaryProps {
   expenses: NewExpense[];
-  handleExpenseEdit: (screenName: screenNames, expenseData: NewExpense|null) => void;
+  handleExpenseEdit: (
+    screenName: screenNames,
+    expenseData: NewExpense | null
+  ) => void;
+  showError?:boolean
 }
 
 const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
   expenses,
   handleExpenseEdit,
+  showError
 }) => {
   const dispatch = useDispatch();
   const handleEdit = (data: NewExpense) => {
@@ -67,7 +73,7 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
             <button onClick={() => handleEdit(data)}>
               <FiEdit2 size={15} />
             </button>
-            <button onClick={()=>dispatch(deleteNewExpense(data.id))}>
+            <button onClick={() => dispatch(deleteNewExpense(data.id))}>
               <MdOutlineDelete size={15} />
             </button>
           </div>
@@ -78,20 +84,27 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
   );
   return (
     <div className="expense-container expense-summary">
-      <H1 text="Expense Summary" type="primary" className="expense-header" />
+      <H1 text={EXPORT_SUMMARY.TITLE} type="primary" className="expense-header" />
       <div
         className="table-container"
         style={{ height: `${expenses.length * 6.5 + 9.5}%` }}
       >
         <Table rowData={expenses} columnDefs={columnDefinition} />
       </div>
+      {showError && <div className="error">
+        {EXPORT_SUMMARY.ERROR_MESSAGE}
+      </div>}
       <div className="btns">
         <Button
-          name="Add More"
+          name={EXPORT_SUMMARY.ADD_MORE_BTN}
           type={ITEM_TYPES.SECONDARY}
-          onClick={() => handleExpenseEdit(screenNames.ADD,null)}
+          onClick={() => handleExpenseEdit(screenNames.ADD, null)}
         />
-        <Button name="Submit" type={ITEM_TYPES.PRIMARY} onClick={() => handleExpenseEdit(screenNames.LOGIN,null)} />
+        <Button
+          name={EXPORT_SUMMARY.SUBMIT}
+          type={ITEM_TYPES.PRIMARY}
+          onClick={() => handleExpenseEdit(screenNames.LOGIN, null)}
+        />
       </div>
     </div>
   );

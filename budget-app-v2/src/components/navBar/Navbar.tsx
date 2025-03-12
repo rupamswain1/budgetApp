@@ -58,6 +58,7 @@ const NavBar = () => {
                 isActive={false}
                 Icon={item.logo}
                 name={item.name}
+                isDisabled={!item.enabled}
               />
             ) : (
               <DummyButton />

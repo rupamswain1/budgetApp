@@ -11,7 +11,15 @@ const useAddExpenses = async (expenses: NewExpense[]): Promise<FetchUtilResult<A
   const url = addExpenseUrl;
 
   const onSuccess = (response: AddExpenseResponse|null) => {
-    console.log({ response });
+    console.log({ response,test:(response?.success &&
+      response?.recordsAdded > 0 &&
+      response?.updatedRecords &&
+      response?.updatedRecords?.length > 0 &&
+      response?.totalExpenseAmount)  },response?.success, response?.recordsAdded,
+      response?.updatedRecords,
+      response?.updatedRecords?.length,
+      response?.totalExpenseAmount
+    );
 
     if (
       !(response?.success &&

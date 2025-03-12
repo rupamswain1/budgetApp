@@ -10,14 +10,15 @@ const IconButton: React.FC<IconButtonProps> = ({
   name,
   handleClick,
   isNameVisible,
-  iconColor
+  iconColor,
+  isDisabled=false
 }) => {
   console.log("IconButton")
   return <button
     key={id}
     className={`nav-btn ${isActive ? "nav-btn-selected" : ""} ${customClass}`}
     onClick={handleClick}
-    disabled={!isActive}
+    disabled={isDisabled}
   >
     <div>
       <div className="nav-logo">

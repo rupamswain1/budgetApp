@@ -3,13 +3,14 @@ import {
   AddExpensesComponent,
   ExpenseSummary,
   LoginSection,
+  Loader,
 } from "$components";
 import { useAuthValidation } from "$hooks";
 import { NewExpense, screenNames } from "$interfaces";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
-import {addExpenses} from "../../store/expensesReducer";
+import { addExpenses } from "../../store/expensesReducer";
 
 const AddExpensesModal = ({
   displayAddModal,
@@ -18,10 +19,12 @@ const AddExpensesModal = ({
   displayAddModal: boolean;
   onCloseModal: () => void;
 }): JSX.Element => {
-  const newExpenses = useSelector(
-    (state: RootState) => state.expense.newExpenses
+  const { newExpenses, isLoading, error } = useSelector(
+    (state: RootState) => state.expense
   );
-  const [screen, setScreen] = useState<screenNames>(screenNames.ADD);
+  const [screen, setScreen] = useState<screenNames>(
+    newExpenses.length > 0 ? screenNames.SUMMARY : screenNames.ADD
+  );
   const [selectedExpense, setSelectedExpense] = useState<NewExpense | null>(
     null
   );
@@ -39,7 +42,6 @@ const AddExpensesModal = ({
       console.log({ isUserLoggedIn });
       if (isUserLoggedIn && screenName === screenNames.LOGIN) {
         submitExpenses();
-        setScreen(screenNames.ADD);
       } else {
         setScreen(screenName);
         setSelectedExpense(expense);
@@ -49,9 +51,18 @@ const AddExpensesModal = ({
   );
   const submitExpenses = useCallback(() => {
     console.log("submit expenses");
-    dispatch(addExpenses())
-    closeModalProcess();
-  },[]);
+    setScreen(screenNames.SUMMARY);
+    dispatch(addExpenses());
+  }, []);
+  //below useEffect will close the modal after the submit add expense is successful
+  useEffect(() => {
+    console.log({ isLoading, error });
+    if (!isLoading && !error) {
+      console.log("close modal");
+      setScreen(screenNames.ADD);
+      closeModalProcess();
+    }
+  }, [isLoading, error]);
   const closeModalProcess = useCallback(() => {
     onCloseModal();
     if (newExpenses?.length > 0) {
@@ -60,12 +71,17 @@ const AddExpensesModal = ({
       setScreen(screenNames.ADD);
     }
     setSelectedExpense(null);
-  },[]);
+  }, []);
   //TODO: add a funtion here such that if user is logged in, it will submit from expense summary and if user not logged in then submit once login is detected
   return (
     <Modal isDisplayed={displayAddModal} onClose={closeModalProcess}>
+      {isLoading && <Loader />}
       {screen === screenNames.SUMMARY ? (
-        <ExpenseSummary expenses={newExpenses} handleExpenseEdit={handleEdit} />
+        <ExpenseSummary
+          expenses={newExpenses}
+          handleExpenseEdit={handleEdit}
+          showError={error}
+        />
       ) : screen === screenNames.LOGIN ? (
         <LoginSection authCallback={submitExpenses} />
       ) : (

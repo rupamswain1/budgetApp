@@ -8,6 +8,7 @@ export interface IconButtonProps {
     isNameVisible?: boolean;
     iconColor?:string;
     onClick?:()=>void;
+    isDisabled?:boolean;
   }
 
 export type PartialIButtonProps = Partial<IconButtonProps>;
