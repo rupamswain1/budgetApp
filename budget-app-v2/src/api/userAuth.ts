@@ -14,6 +14,7 @@ const userAuth = async ({ userName }: UserAuth) => {
       Cookies.set("session_id", response.token, {
         expires: 7,
         secure: true,
+        sameSite:"Strict"
       });
     }
   };

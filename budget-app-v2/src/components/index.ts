@@ -14,3 +14,5 @@ export {default as LoginSection} from "./loginSection/LoginSection";
 export {default as ExpenseSummary} from "./expenseSummary/ExpenseSummary";
 export {default as Table} from "./common/table/Table";
 export {default as AddExpensesModal} from "./addExpenseModal/AddExpenseModal";
+export {default as PostLoginLayout} from "./common/postLoginLayout/PostLoginLayout";
+export {default as PageSection} from "./common/pageSection/PageSection";
