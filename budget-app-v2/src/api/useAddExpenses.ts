@@ -1,26 +1,12 @@
 import { addExpenseUrl } from "$constants";
-import { AddExpenseResponse, NewExpense } from "$interfaces";
+import { AddExpenseResponse, FetchUtilResult, NewExpense } from "$interfaces";
 import fetchUtil from "./hooks/fetchUtil";
 import Cookies from "js-cookie";
-interface FetchUtilResult<T> {
-    apiFailed: boolean;
-    apiSuccess: boolean;
-    responseData: T | null;
-  }
+
 const useAddExpenses = async (expenses: NewExpense[]): Promise<FetchUtilResult<AddExpenseResponse>> => {
   const url = addExpenseUrl;
 
   const onSuccess = (response: AddExpenseResponse|null) => {
-    console.log({ response,test:(response?.success &&
-      response?.recordsAdded > 0 &&
-      response?.updatedRecords &&
-      response?.updatedRecords?.length > 0 &&
-      response?.totalExpenseAmount)  },response?.success, response?.recordsAdded,
-      response?.updatedRecords,
-      response?.updatedRecords?.length,
-      response?.totalExpenseAmount
-    );
-
     if (
       !(response?.success &&
       response?.recordsAdded > 0 &&

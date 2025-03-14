@@ -6,3 +6,22 @@ export interface AddExpenseResponse{
     updatedRecords:Expenses[],
     totalExpenseAmount:number
 }
+
+export interface AddBudgetResponse{
+    success:boolean
+}
+
+export interface GetBudgetResponse{
+    budget:{
+        date:string;
+        amount:number;
+        createdBy:string;
+        createdOn:string;
+    }
+}
+
+export interface FetchUtilResult<T> {
+    apiFailed: boolean;
+    apiSuccess: boolean;
+    responseData: T | null;
+  }
