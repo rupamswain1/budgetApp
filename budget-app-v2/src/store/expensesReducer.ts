@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import useAddExpenses from "../api/useAddExpenses";
 import { RootState } from "./store";
 import { useAddBudget, useGetBudget } from "../api/useBudget";
+import { useGetExpenses } from "../api/useGetExpenses";
 
 export const addExpenses = createAsyncThunk(
   "expense/addExpenses",
@@ -22,6 +23,26 @@ export const addExpenses = createAsyncThunk(
     }
   }
 );
+
+export const getExpenses = createAsyncThunk(
+  "expense/getExpenses",
+  async(_,thunkApi) => {
+    try {
+      const state = thunkApi.getState() as RootState;
+      const { currentMonth, currentYear } = state.expense;
+      const { responseData, apiFailed, apiSuccess } = await useGetExpenses({
+        month: currentMonth,
+        year: currentYear,
+      });
+      if (apiFailed || !responseData?.expenses) {
+        return thunkApi.rejectWithValue("Get Expenses Failed");
+      }
+      return { responseData, apiFailed, apiSuccess };
+    } catch (error) {
+      return thunkApi.rejectWithValue("Get Expenses Failed" + error);
+    }
+  }
+)
 
 export const addBudget = createAsyncThunk(
   "expense/addBudget",
@@ -108,9 +129,24 @@ const expenseSclice = createSlice({
         const { updatedRecords, totalExpenseAmount } =
           action.payload.responseData;
         state.expenses = state.expenses.concat(updatedRecords);
-        state.remainingBudget = state.remainingBudget - totalExpenseAmount;
+        state.remainingBudget = parseFloat((state.remainingBudget - totalExpenseAmount).toFixed(2));
       })
       .addCase(addExpenses.rejected, (state, action) => {
+        console.log("rejected block", action);
+        state.isLoading = false;
+        state.error = true;
+      })
+      .addCase(getExpenses.pending, (state) => {
+        state.isLoading = true;
+        state.error = false;
+      })
+      .addCase(getExpenses.fulfilled, (state, action) => {
+        state.isLoading = false;
+       
+        state.expenses = action.payload.responseData?.expenses;
+        state.remainingBudget = parseFloat((state.budget - action.payload.responseData?.totalExpenseAmount).toFixed(2));
+      })
+      .addCase(getExpenses.rejected, (state, action) => {
         console.log("rejected block", action);
         state.isLoading = false;
         state.error = true;
@@ -135,7 +171,7 @@ const expenseSclice = createSlice({
       })
       .addCase(getBudget.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.budget = action.payload.responseData.budget.amount;
+        state.budget = parseFloat(action.payload.responseData.budget.amount.toFixed(2));
       })
       .addCase(getBudget.rejected, (state, action) => {
         console.log("rejected block", action);
