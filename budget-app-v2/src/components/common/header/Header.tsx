@@ -38,3 +38,17 @@ export const H2 = ({ text, type }: { text: string; type: itemType }) => {
     </h2>
   );
 };
+
+
+export const H3 = ({ text, type }: { text: string; type: itemType }) => {
+  console.log("H3");
+  return (
+    <h2
+      className={`${
+        type === ITEM_TYPES.PRIMARY ? "primary" : "secondary"
+      } h3-text`}
+    >
+      {text}
+    </h2>
+  );
+};

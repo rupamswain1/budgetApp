@@ -9,3 +9,10 @@ export const ADD_BUDGET = {
     },
   },
 };
+
+export const HOME = {
+  TITLE:"Expenses at a Glance",
+  CHART_TITLE:"Remianing Budget",
+  TODAY_EXPENSE:"Today's Update",
+  LAST_TEN:"Last 10 Expenses"
+}

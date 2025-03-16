@@ -1,42 +1,112 @@
-import { H2, Loader, PageSection, PostLoginLayout } from '$components';
-import { useSelector, useDispatch } from 'react-redux';
-import AddBudget from '../addBudget/Addbudget';
-import './hompage.scss';
-import type { RootState,AppDispatch } from 'store/store';
-import { useLayoutEffect } from 'react';
-import { getBudget, getExpenses } from '../../store/expensesReducer';
-import { ITEM_TYPES } from '$interfaces';
-import './hompage.scss';
+import {
+  Card,
+  Loader,
+  PageSection,
+  PieChart,
+  PostLoginLayout,
+  Table,
+} from "$components";
+import { useSelector, useDispatch } from "react-redux";
+import AddBudget from "../addBudget/Addbudget";
+import "./hompage.scss";
+import type { RootState, AppDispatch } from "store/store";
+import { useLayoutEffect, useMemo } from "react";
+import { getBudget, getExpenses } from "../../store/expensesReducer";
+import "./hompage.scss";
+import { REMAINING_BUDGET_CHART } from "$constants";
+import { HOME } from "$constants";
+import { ColDef } from "ag-grid-community";
+import { NewExpense } from "$interfaces";
 const HomePage = () => {
-  const { isLoading, error, budget, remainingBudget } = useSelector(
+  const { isLoading, error, budget, remainingBudget, todaysExpenses, lastTenExpenses } = useSelector(
     (state: RootState) => state.expense
   );
   const dispatch = useDispatch<AppDispatch>();
-  // useLayoutEffect(() => {
-  //   dispatch(getBudget());
-  //   dispatch(getExpenses())
-  // },[]);
-  //TODO:
-  //3. prepare data for the expense donut chart
-  //4. prepare data for a line chart showing daily spend
-  //5. create a section for expenses added todat
-  //6. create a section for last 10 expenses
+  useLayoutEffect(() => {
+    dispatch(getBudget());
+    dispatch(getExpenses());
+  }, []);
+  const remainingBudgetChartData = useMemo(() => {
+    return [
+      { ...REMAINING_BUDGET_CHART.REMAINING_BUDGET, value: remainingBudget },
+      {
+        ...REMAINING_BUDGET_CHART.EXPENSES,
+        value: parseFloat((budget - remainingBudget).toFixed(2)),
+      },
+    ];
+  }, [remainingBudget, budget]);
+
+    const columnDefinition: ColDef<NewExpense>[] = useMemo(
+      () => [
+        {
+          headerName: "Date",
+          field: "date",
+          sortable: true,
+          filter: true,
+          width: 100,
+        },
+        {
+          headerName: "Item",
+          field: "itemName",
+          sortable: true,
+          filter: true,
+          width: 100,
+        },
+        {
+          headerName: "Price",
+          field: "price",
+          sortable: true,
+          filter: true,
+          width: 100,
+        },
+        {
+          headerName: "Category",
+          field: "category",
+          sortable: true,
+          filter: true,
+          width: 100,
+        },
+        {
+          headerName: "Payment Method",
+          field: "paymentMethod",
+          sortable: true,
+          filter: true,
+          width: 100,
+        },
+        // {
+        //   headerName: "Actions",
+        //   width: 80,
+        //   cellRenderer: ({ data }: { data: NewExpense }) => (
+        //     <div className="action-btn-grid">
+        //       <button onClick={() => handleEdit(data)}>
+        //         <FiEdit2 size={15} />
+        //       </button>
+        //       <button onClick={() => dispatch(deleteNewExpense(data.id))}>
+        //         <MdOutlineDelete size={15} />
+        //       </button>
+        //     </div>
+        //   ),
+        // },
+      ],
+      []
+    );
+
   return (
     <>
-      {isLoading && <Loader/>}
+      {isLoading && <Loader />}
       {budget ? (
-        <PostLoginLayout title="Your Expenses at a Glance">
+        <PostLoginLayout title={HOME.TITLE}>
           <PageSection>
             <>
-            <section className='home_remainingContainer'>
-              <H2 text="Remaining Amount" type={ITEM_TYPES.PRIMARY}/>
-            </section>
-            <div className='home_toadysExpense'>
-              <p>Today's Update</p>
-            </div>
-            <div className='home_topten'>
-              <p>Top 10 expenses</p>
-            </div>
+              <Card title={HOME.CHART_TITLE} amount={remainingBudget}>
+                <PieChart data={remainingBudgetChartData} />
+              </Card>
+              <Card title={HOME.TODAY_EXPENSE} amount={todaysExpenses?.total} enableScroll>
+                <Table columnDefs={columnDefinition} rowData={todaysExpenses?.expenses}/>
+              </Card>
+              <Card title={HOME.LAST_TEN} amount={lastTenExpenses?.total} enableScroll>
+              <Table columnDefs={columnDefinition} rowData={lastTenExpenses?.expenses}/>
+              </Card>
             </>
           </PageSection>
         </PostLoginLayout>

@@ -16,3 +16,5 @@ export {default as Table} from "./common/table/Table";
 export {default as AddExpensesModal} from "./addExpenseModal/AddExpenseModal";
 export {default as PostLoginLayout} from "./common/postLoginLayout/PostLoginLayout";
 export {default as PageSection} from "./common/pageSection/PageSection";
+export {default as PieChart} from "./pieChart/PieChart";
+export {default as Card} from "./common/card/Card";
