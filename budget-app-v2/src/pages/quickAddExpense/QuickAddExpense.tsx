@@ -1,14 +1,10 @@
 import "./quickAddExpense.style.scss";
-import { AddExpenses, AddExpensesModal } from "$components";
-import { useCallback, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
+import { AddExpensesModal } from "$components";
+import React, { useCallback, useState } from "react";
 
-const QuickAddExpenses = () => {
+const QuickAddExpenses = ({children}:{children:JSX.Element}) => {
   const [showQuickAdd, setShowQuickAdd] = useState<boolean>(true);
-  const newExpenses = useSelector(
-    (state: RootState) => state.expense.newExpenses
-  );
+
   const onClose = useCallback(() => {
     setShowQuickAdd(!setShowQuickAdd);
   }, []);
@@ -16,11 +12,10 @@ const QuickAddExpenses = () => {
   const showModal = useCallback(() => {
     setShowQuickAdd(true);
   }, []);
-
-  console.log("QuickAddExpense", newExpenses.length);
   return (
     <>
-      <AddExpenses customClass="login-add-expense" onClick={showModal} />
+      {React.cloneElement(children, {onClick:showModal})}
+      {/* <AddExpenses customClass="login-add-expense" onClick={showModal} /> */}
       <AddExpensesModal
         displayAddModal={showQuickAdd}
         onCloseModal={onClose}

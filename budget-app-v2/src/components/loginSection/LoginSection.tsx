@@ -3,41 +3,66 @@ import { ITEM_TYPES } from "$interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/authReducer";
 import type { RootState, AppDispatch } from "store/store";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./loginSection.style.scss";
+import { UseFormInput } from "$hooks";
+
+interface LoginFields {
+  userName: string;
+  password: string;
+}
 
 const LoginSection = ({
   authCallback = () => {},
+  customLogin = null
 }: {
-  authCallback?: () => void;
+  authCallback?: () => void,
+  customLogin?: null|((state:LoginFields)=>void)
 }) => {
-
-  const [userName, setUserName] = useState<string>("");
-  const { loading, error, token } = useSelector(
+  const [formState, handleFormInput] = UseFormInput<LoginFields>({
+    userName: "",
+    password: "",
+  });
+  const { loading, error, token, locked } = useSelector(
     (state: RootState) => state.auth
   );
   const [disableLogin, setDisableLogin] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
-  const onChangeHandler = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUserName(e.target.value);
-      if (e.target.value.length > 0) {
-        setDisableLogin(false);
-      } else {
-        setDisableLogin(true);
-      }
-    },
-    []
-  );
+  useEffect(() => {
+    if (
+      formState.userName &&
+      formState.password &&
+      formState.userName.length > 0 &&
+      formState.password.length > 0 &&
+      !locked
+    ) {
+      setDisableLogin(false);
+    } else {
+      setDisableLogin(true);
+    }
+  }, [formState.userName, formState.password]);
 
   useEffect(() => {
-    if (!loading && !error && token) {
-      authCallback();
+    return ()=>{
+      if (!loading && !error && token) {
+        authCallback();
+      }
     }
+
   }, [loading, error]);
-  
+
   const handleLogin = () => {
-    dispatch(loginUser(userName));
+    if (!locked) {
+      if(customLogin !==null){
+        customLogin(formState)
+      }  
+      else{dispatch(
+        loginUser({
+          userName: formState.userName,
+          password: formState.password,
+        })
+      )};
+    }
   };
 
   return (
@@ -45,13 +70,20 @@ const LoginSection = ({
       {loading && <Loader />}
 
       <H1 text="Login" type={ITEM_TYPES.SECONDARY} className="login" />
-      {error && <p className="error">Invalid User Name or Password</p>}
+      {error && <p className="error">{error}</p>}
       <InputField
         name="userName"
         label="User Name or Email"
         type="text"
-        onChangeHandler={onChangeHandler}
-        value={userName}
+        onChangeHandler={handleFormInput}
+        value={formState.userName}
+      />
+      <InputField
+        name="password"
+        label="Password"
+        type="password"
+        onChangeHandler={handleFormInput}
+        value={formState.password}
       />
       <Button
         name="Login"

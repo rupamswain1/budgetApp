@@ -16,7 +16,7 @@ export const ADD_EXPENSES = {
     },
     ITEM:{
         LABEL:"Item Name",
-        NAME:"item"
+        NAME:"itemName"
     },
     PRICE:{
         LABEL:"Price",

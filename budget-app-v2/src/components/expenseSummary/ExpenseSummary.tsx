@@ -39,7 +39,7 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
       },
       {
         headerName: "Item",
-        field: "item",
+        field: "itemName",
         sortable: true,
         filter: true,
         width: 100,

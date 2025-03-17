@@ -7,6 +7,7 @@ import { LuReceiptIndianRupee } from "react-icons/lu";
 import { AddExpenses, DummyButton, IconButton } from "$components";
 
 import "./navbar.style.scss";
+import { QuickAddExpenses } from "$pages";
 const NavBar = () => {
   const navItems: NavButton[] = [
     {
@@ -45,13 +46,18 @@ const NavBar = () => {
       logo: CiSettings,
     },
   ];
-  console.log("Navbar")
+
+  console.log("Navbar");
   return (
     <nav className="nav-container">
       {navItems.map((item) => {
         return (
           <>
-            {item.id === "add" && <AddExpenses />}
+            {item.id === "add" && (
+              <QuickAddExpenses>
+                <AddExpenses />
+              </QuickAddExpenses>
+            )}
             {item.id !== "add" ? (
               <IconButton
                 id={item.id}

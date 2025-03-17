@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import { addExpenses } from "../../store/expensesReducer";
+import { loginUser } from "../../store/authReducer";
 
 const AddExpensesModal = ({
   displayAddModal,
@@ -22,6 +23,7 @@ const AddExpensesModal = ({
   const { newExpenses, isLoading, error } = useSelector(
     (state: RootState) => state.expense
   );
+
   const [screen, setScreen] = useState<screenNames>(
     newExpenses.length > 0 ? screenNames.SUMMARY : screenNames.ADD
   );
@@ -54,6 +56,22 @@ const AddExpensesModal = ({
     setScreen(screenNames.SUMMARY);
     dispatch(addExpenses());
   }, []);
+  const submitExpensesWithLogin = useCallback(
+    async (data: { userName: string; password: string }) => {
+      console.log("submit expenses");
+      const loginResult = await dispatch(
+        loginUser({
+          userName: data.userName,
+          password: data.password,
+        })
+      );
+      setScreen(screenNames.SUMMARY);
+      if (loginUser.fulfilled.match(loginResult)) {
+        await dispatch(addExpenses());
+      }
+    },
+    []
+  );
   //below useEffect will close the modal after the submit add expense is successful
   useEffect(() => {
     console.log({ isLoading, error });
@@ -72,7 +90,7 @@ const AddExpensesModal = ({
     }
     setSelectedExpense(null);
   }, []);
-  //TODO: add a funtion here such that if user is logged in, it will submit from expense summary and if user not logged in then submit once login is detected
+
   return (
     <Modal isDisplayed={displayAddModal} onClose={closeModalProcess}>
       {isLoading && <Loader />}
@@ -83,7 +101,7 @@ const AddExpensesModal = ({
           showError={error}
         />
       ) : screen === screenNames.LOGIN ? (
-        <LoginSection authCallback={submitExpenses} />
+        <LoginSection customLogin={submitExpensesWithLogin} />
       ) : (
         <AddExpensesComponent
           handleNext={handleNext}

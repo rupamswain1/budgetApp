@@ -18,3 +18,4 @@ export {default as PostLoginLayout} from "./common/postLoginLayout/PostLoginLayo
 export {default as PageSection} from "./common/pageSection/PageSection";
 export {default as PieChart} from "./pieChart/PieChart";
 export {default as Card} from "./common/card/Card";
+export {default as ErrorCard} from "./common/errorCard/ErrorCard";

@@ -1,0 +1,17 @@
+@use '@scss/variables' as v;
+
+.error-container{
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    .error-card{
+        width: 70dvw;
+        text-align: center;
+        border: 1px solid v.$lightgray;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 4px 3px 19px rgba(0, 0, 0, 0.15);
+    }
+}

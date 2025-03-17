@@ -17,7 +17,7 @@ export interface ExpenseState {
 export interface NewExpense {
   id: number | string;
   date: string;
-  item: string;
+  itemName: string;
   price: number | null;
   category: EXPENSES_CATEGORY;
   paymentMethod: PAYMENT_METHOD;

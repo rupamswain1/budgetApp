@@ -4,13 +4,14 @@ import Cookies from "js-cookie";
 import { responseType } from "$interfaces";
 interface UserAuth {
   userName: string;
+  password: string;
 }
 
-const userAuth = async ({ userName }: UserAuth) => {
+const userAuth = async ({ userName, password }: UserAuth) => {
   const url = userAuthUrl;
   const onSuccess = (response: responseType | null) => {
     console.log({ response });
-    if (!response?.error && response?.token) {
+    if (!response?.error && response?.token && !response?.locked) {
       Cookies.set("session_id", response.token, {
         expires: 7,
         secure: true,
@@ -28,6 +29,7 @@ const userAuth = async ({ userName }: UserAuth) => {
     onFailure,
     body: {
       username: userName,
+      password
     },
   });
   const { apiFailed, apiSuccess, responseData } = await exec();

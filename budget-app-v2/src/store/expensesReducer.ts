@@ -141,7 +141,7 @@ const expenseSclice = createSlice({
         } else {
           state.todaysExpenses = {
             expenses: updatedRecords,
-            total: parseFloat(totalExpenseAmount.toFixed(2)),
+            total: parseFloat(totalExpenseAmount?.toFixed(2)),
           };
         }
         state.remainingBudget = parseFloat(
