@@ -16,7 +16,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   console.log("IconButton")
   return <button
     key={id}
-    className={`nav-btn ${isActive ? "nav-btn-selected" : ""} ${customClass}`}
+    className={`nav-btn ${isActive ? "nav-btn-selected" : ""} ${customClass ?? ''}`}
     onClick={handleClick}
     disabled={isDisabled}
   >

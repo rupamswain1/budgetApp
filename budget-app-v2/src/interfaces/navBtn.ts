@@ -8,4 +8,5 @@ export interface NavButton{
     enabled:boolean,
     logo:IconType,
     onClick?:()=>void;
+    route?:string;
 }

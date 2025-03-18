@@ -11,7 +11,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import { addExpenses } from "../../store/expensesReducer";
-import { loginUser } from "../../store/authReducer";
 
 const AddExpensesModal = ({
   displayAddModal,
@@ -56,22 +55,7 @@ const AddExpensesModal = ({
     setScreen(screenNames.SUMMARY);
     dispatch(addExpenses());
   }, []);
-  const submitExpensesWithLogin = useCallback(
-    async (data: { userName: string; password: string }) => {
-      console.log("submit expenses");
-      const loginResult = await dispatch(
-        loginUser({
-          userName: data.userName,
-          password: data.password,
-        })
-      );
-      setScreen(screenNames.SUMMARY);
-      if (loginUser.fulfilled.match(loginResult)) {
-        await dispatch(addExpenses());
-      }
-    },
-    []
-  );
+  
   //below useEffect will close the modal after the submit add expense is successful
   useEffect(() => {
     console.log({ isLoading, error });
@@ -101,7 +85,7 @@ const AddExpensesModal = ({
           showError={error}
         />
       ) : screen === screenNames.LOGIN ? (
-        <LoginSection customLogin={submitExpensesWithLogin} />
+        <LoginSection/>
       ) : (
         <AddExpensesComponent
           handleNext={handleNext}

@@ -3,6 +3,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userAuth from "../api/userAuth";
 import Cookies from "js-cookie";
+import { RootState } from "./store";
+import { addExpenses } from "./expensesReducer";
 interface AuthState {
   token: string | null;
   loading: boolean;
@@ -14,12 +16,18 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (
     { userName, password }: { userName: string; password: string },
-    { rejectWithValue }
+    { rejectWithValue, dispatch, getState }
   ) => {
     console.log("inside loginUser", userName);
     const { responseData, apiSuccess } = await userAuth({ userName, password });
     console.log({ responseData });
     if (responseData && apiSuccess && responseData?.token) {
+      //below code is to submit the expenses added from login page
+      const state = getState() as RootState;
+      const newExpenses = state.expense.newExpenses;
+      if(newExpenses.length>0){
+        await dispatch(addExpenses())
+      }
       return responseData as string;
     }
     if (responseData?.locked) {

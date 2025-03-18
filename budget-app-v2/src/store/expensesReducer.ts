@@ -1,4 +1,4 @@
-import { Budget, ExpenseState } from "$interfaces";
+import { Budget, Expenses, ExpenseState } from "$interfaces";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import useAddExpenses from "../api/useAddExpenses";
 import { RootState } from "./store";
@@ -83,6 +83,38 @@ export const getBudget = createAsyncThunk(
   }
 );
 
+const getTodaysExpenseAndTotal = (expenses:Expenses[],currentDate:number) =>{
+  let total = 0;
+  const todaysExpense = expenses.filter((exp) => {
+    if (exp.date.split("-")[2] === currentDate.toString()) {
+      total = total + (exp.price ?? 0);
+      return true;
+    }
+    return false;
+  });
+  return {todaysExpense,total}
+}
+
+const getLast10ExpenseAndTotal = (expenses:Expenses[], currentDate:number) =>{
+  let total = 0;
+  const last10 = [];
+  let count = 0;
+  lasttenLoop: for (const exp of expenses) {
+    if (
+      parseInt(exp.date.split("-")[2]) < currentDate &&
+      count < 10
+    ) {
+      total = total + (exp.price ?? 0);
+      count++;
+      last10.push(exp);
+    }
+    if (count >= 10) {
+      break lasttenLoop;
+    }
+  }
+  return {last10, total}
+}
+
 const expenseSclice = createSlice({
   name: "expense",
   initialState: {
@@ -103,13 +135,14 @@ const expenseSclice = createSlice({
       const isExpenseAvailable = state.newExpenses.find(
         (expense) => expense.id === action?.payload?.id
       );
+      const newExp = {...action.payload, price: parseFloat(action.payload.price)}
       if (isExpenseAvailable) {
         const newExpenses = state.newExpenses.map((expenses) =>
-          expenses.id === action.payload.id ? action.payload : expenses
+          expenses.id === action.payload.id ? newExp : expenses
         );
         state.newExpenses = newExpenses;
       } else {
-        state.newExpenses = [...state.newExpenses, action.payload];
+        state.newExpenses = [...state.newExpenses, newExp];
       }
     },
     deleteNewExpense: (state, action) => {
@@ -130,19 +163,26 @@ const expenseSclice = createSlice({
         state.newExpenses = [];
         const { updatedRecords, totalExpenseAmount } =
           action.payload.responseData;
-        state.expenses = state.expenses.concat(updatedRecords);
+        console.log({action})
+        state.expenses = updatedRecords.concat(state.expenses);
+        const {todaysExpense, total} = getTodaysExpenseAndTotal(updatedRecords,state.currentDate)
         if (state.todaysExpenses) {
           state.todaysExpenses = {
-            expenses: state.todaysExpenses.expenses.concat(updatedRecords),
+            expenses: todaysExpense.concat(state.todaysExpenses.expenses),
             total: parseFloat(
-              (state.todaysExpenses.total + totalExpenseAmount).toFixed(2)
+              (state.todaysExpenses.total + total).toFixed(2)
             ),
           };
         } else {
           state.todaysExpenses = {
-            expenses: updatedRecords,
-            total: parseFloat(totalExpenseAmount?.toFixed(2)),
+            expenses: todaysExpense,
+            total: parseFloat(total?.toFixed(2)),
           };
+        }
+        const {last10, total : lastTotal} = getLast10ExpenseAndTotal(state.expenses,state.currentDate);
+        state.lastTenExpenses = {
+          expenses : last10,
+          total: lastTotal
         }
         state.remainingBudget = parseFloat(
           (state.remainingBudget - totalExpenseAmount).toFixed(2)
@@ -176,25 +216,10 @@ const expenseSclice = createSlice({
           expenses: todaysExpense,
           total: todaysTotal,
         };
-        let lastTenTotal = 0;
-        let count = 0;
-        const lastTenExpense = [];
-        lasttenLoop: for (const exp of expenses) {
-          if (
-            parseInt(exp.date.split("-")[2]) < state.currentDate &&
-            count < 10
-          ) {
-            lastTenTotal = lastTenTotal + (exp.price ?? 0);
-            count++;
-            lastTenExpense.push(exp);
-          }
-          if (count >= 10) {
-            break lasttenLoop;
-          }
-        }
+        const {last10, total} = getLast10ExpenseAndTotal(expenses,state.currentDate)
         state.lastTenExpenses = {
-          expenses:lastTenExpense,
-          total:lastTenTotal
+          expenses:last10,
+          total:total
         }
       })
       .addCase(getExpenses.rejected, (state, action) => {

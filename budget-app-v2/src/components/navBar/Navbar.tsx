@@ -8,7 +8,11 @@ import { AddExpenses, DummyButton, IconButton } from "$components";
 
 import "./navbar.style.scss";
 import { QuickAddExpenses } from "$pages";
+import { useLocation } from "react-router";
+import { ROUTES } from "$constants";
 const NavBar = () => {
+  const location = useLocation().pathname;
+  console.log({location})
   const navItems: NavButton[] = [
     {
       id: "home",
@@ -16,6 +20,7 @@ const NavBar = () => {
       href: "",
       enabled: true,
       logo: IoHomeOutline,
+      route: ROUTES.HOME
     },
     {
       id: "report",
@@ -23,6 +28,7 @@ const NavBar = () => {
       href: "",
       enabled: false,
       logo: FaChartLine,
+      route: ROUTES.REPORTS
     },
     {
       id: "add",
@@ -37,6 +43,7 @@ const NavBar = () => {
       href: "",
       enabled: false,
       logo: LuRepeat2,
+      route: ROUTES.AUTOPAY
     },
     {
       id: "settings",
@@ -44,6 +51,7 @@ const NavBar = () => {
       href: "",
       enabled: false,
       logo: CiSettings,
+      route: ROUTES.SETTINGS
     },
   ];
 
@@ -61,7 +69,7 @@ const NavBar = () => {
             {item.id !== "add" ? (
               <IconButton
                 id={item.id}
-                isActive={false}
+                isActive={location === item.route}
                 Icon={item.logo}
                 name={item.name}
                 isDisabled={!item.enabled}
