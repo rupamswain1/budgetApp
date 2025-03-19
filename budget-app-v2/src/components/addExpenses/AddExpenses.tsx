@@ -23,6 +23,7 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
     price: null,
     category: EXPENSES_CATEGORY.FOOD,
     paymentMethod: PAYMENT_METHOD.CREDIT_CARD,
+    paidBy: null,
   });
   const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
 
@@ -87,6 +88,14 @@ const AddExpenses:React.FC<AddExpensesProps> = ({handleNext, selectedExpense}) =
         type="number"
         onChangeHandler={handleExpenseInput}
         value={expense.price}
+      />
+        <InputField
+        label={ADD_EXPENSES.PAIDBY.LABEL}
+        name={ADD_EXPENSES.PAIDBY.NAME}
+        type=""
+        onChangeHandler={handleExpenseInput}
+        value={expense.paidBy ? expense.paidBy : null}
+        placeHolder={ADD_EXPENSES.PAIDBY.PLACEHOLDER}
       />
       <Dropdown
         options={options}

@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddBudget from "../addBudget/Addbudget";
 import "./hompage.scss";
 import type { RootState, AppDispatch } from "store/store";
-import { useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { getBudget, getExpenses } from "../../store/expensesReducer";
 import "./hompage.scss";
 import { REMAINING_BUDGET_CHART } from "$constants";
@@ -26,12 +26,17 @@ const HomePage = () => {
     remainingBudget,
     todaysExpenses,
     lastTenExpenses,
+    expenses,
   } = useSelector((state: RootState) => state.expense);
+  const [retry, setRetry] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
   useLayoutEffect(() => {
-    dispatch(getBudget());
-    dispatch(getExpenses());
-  }, []);
+    console.log("runnn");
+    if (!budget || budget <= 0 || !expenses || expenses.length < 1) {
+      dispatch(getBudget());
+      dispatch(getExpenses());
+    }
+  }, [retry]);
   const remainingBudgetChartData = useMemo(() => {
     return [
       { ...REMAINING_BUDGET_CHART.REMAINING_BUDGET, value: remainingBudget },
@@ -61,6 +66,13 @@ const HomePage = () => {
       {
         headerName: "Price",
         field: "price",
+        sortable: true,
+        filter: true,
+        width: 100,
+      },
+      {
+        headerName: "Paid By",
+        field: "paidBy",
         sortable: true,
         filter: true,
         width: 100,
@@ -97,12 +109,19 @@ const HomePage = () => {
     []
   );
 
+  const handleRetry = useCallback(() => {
+    setRetry((prev) => prev + 1);
+  }, []);
+
   return (
     <>
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <ErrorCard text="Unable to fetch Budget and Expenses" />
+        <ErrorCard
+          text="Unable to fetch Budget and Expenses"
+          retryFunction={handleRetry}
+        />
       ) : budget ? (
         <PostLoginLayout title={HOME.TITLE}>
           <PageSection>

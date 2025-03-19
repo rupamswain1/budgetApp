@@ -8,11 +8,11 @@ import { AddExpenses, DummyButton, IconButton } from "$components";
 
 import "./navbar.style.scss";
 import { QuickAddExpenses } from "$pages";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { ROUTES } from "$constants";
 const NavBar = () => {
   const location = useLocation().pathname;
-  console.log({location})
+  const navigate = useNavigate()
   const navItems: NavButton[] = [
     {
       id: "home",
@@ -26,7 +26,7 @@ const NavBar = () => {
       id: "report",
       name: "Reports",
       href: "",
-      enabled: false,
+      enabled: true,
       logo: FaChartLine,
       route: ROUTES.REPORTS
     },
@@ -36,6 +36,7 @@ const NavBar = () => {
       href: "",
       enabled: true,
       logo: LuReceiptIndianRupee,
+      route: ''
     },
     {
       id: "autopay",
@@ -73,6 +74,7 @@ const NavBar = () => {
                 Icon={item.logo}
                 name={item.name}
                 isDisabled={!item.enabled}
+                handleClick={()=>navigate(item.route)}
               />
             ) : (
               <DummyButton />

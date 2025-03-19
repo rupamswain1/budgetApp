@@ -1,0 +1,11 @@
+.reports-charts{
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    width: 270dvw;
+    .cardContainer{
+        width: 90dvw;
+        margin-right: 0.8em;
+        height: 30dvh;
+    }
+}

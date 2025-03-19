@@ -22,6 +22,11 @@ export const ADD_EXPENSES = {
         LABEL:"Price",
         NAME:"price"
     },
+    PAIDBY:{
+        LABEL:"Paid By",
+        NAME:"paidBy",
+        PLACEHOLDER:"My Self"
+    },
     CATEGORY:{
         LABEL:"Category",
         NAME:"category"

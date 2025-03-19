@@ -52,6 +52,13 @@ const ExpenseSummary: React.FC<ExpensesSummaryProps> = ({
         width: 100,
       },
       {
+        headerName: "Paid By",
+        field: "paidBy",
+        sortable: true,
+        filter: true,
+        width: 100,
+      },
+      {
         headerName: "Category",
         field: "category",
         sortable: true,

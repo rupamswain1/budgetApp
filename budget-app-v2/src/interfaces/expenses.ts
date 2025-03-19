@@ -21,6 +21,7 @@ export interface NewExpense {
   price: number | null;
   category: EXPENSES_CATEGORY;
   paymentMethod: PAYMENT_METHOD;
+  paidBy?: string | null;
 }
 
 export interface Expenses extends NewExpense {
