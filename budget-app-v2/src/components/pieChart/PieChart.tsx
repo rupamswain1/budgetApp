@@ -28,7 +28,7 @@ const CenteredMetric = ({
         fill: "#333",
       }}
     >
-      Total : {"\u20B9"} {data[0].value + data[1].value }
+      Total : {"\u20B9"} {data?.reduce((acc,datum)=>acc += datum.value,0)}
     </text>
   );
 };

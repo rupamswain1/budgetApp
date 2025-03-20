@@ -7,11 +7,13 @@ const Card = ({
   title,
   amount = null,
   enableScroll = false,
+  headerComponent = null,
   children,
 }: {
   title: string;
   amount?: number | null;
   enableScroll?:boolean | null;
+  headerComponent?:JSX.Element | null;
   children: JSX.Element;
 }) => {
   return (
@@ -24,6 +26,9 @@ const Card = ({
             type={ITEM_TYPES.SECONDARY}
           />
         )}
+        {
+          headerComponent && headerComponent
+        }
       </div>
       {children}
     </section>

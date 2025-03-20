@@ -19,3 +19,4 @@ export {default as PageSection} from "./common/pageSection/PageSection";
 export {default as PieChart} from "./pieChart/PieChart";
 export {default as Card} from "./common/card/Card";
 export {default as ErrorCard} from "./common/errorCard/ErrorCard";
+export {default as BreakupChart} from "./breakupChart/BreakupChart";
