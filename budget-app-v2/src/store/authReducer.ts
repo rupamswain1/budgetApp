@@ -1,10 +1,10 @@
 //implement createSelector as well
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userAuth from "../api/userAuth";
-import Cookies from "js-cookie";
-import { RootState } from "./store";
-import { addExpenses } from "./expensesReducer";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import userAuth from '../api/userAuth';
+import Cookies from 'js-cookie';
+import { RootState } from './store';
+import { addExpenses } from './expensesReducer';
 interface AuthState {
   token: string | null;
   loading: boolean;
@@ -13,20 +13,20 @@ interface AuthState {
 }
 
 export const loginUser = createAsyncThunk(
-  "auth/loginUser",
+  'auth/loginUser',
   async (
     { userName, password }: { userName: string; password: string },
     { rejectWithValue, dispatch, getState }
   ) => {
-    console.log("inside loginUser", userName);
+    console.log('inside loginUser', userName);
     const { responseData, apiSuccess } = await userAuth({ userName, password });
     console.log({ responseData });
     if (responseData && apiSuccess && responseData?.token) {
       //below code is to submit the expenses added from login page
       const state = getState() as RootState;
       const newExpenses = state.expense.newExpenses;
-      if(newExpenses.length>0){
-        await dispatch(addExpenses())
+      if (newExpenses.length > 0) {
+        await dispatch(addExpenses());
       }
       return responseData as string;
     }
@@ -34,17 +34,17 @@ export const loginUser = createAsyncThunk(
       return rejectWithValue({
         locked: true,
         message:
-          "User Locked due to multiple Invalid attempts, Please contact admin",
+          'User Locked due to multiple Invalid attempts, Please contact admin',
       });
     }
-    return rejectWithValue("User Name or Password Incorrect");
+    return rejectWithValue('User Name or Password Incorrect');
   }
 );
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: {
-    token: Cookies.get("session_id") || null,
+    token: Cookies.get('session_id') || null,
     loading: false,
     error: null,
     locked: false,
@@ -52,7 +52,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.token = null;
-      Cookies.remove("session_id");
+      Cookies.remove('session_id');
     },
   },
   extraReducers: (builder) => {
@@ -67,16 +67,16 @@ const authSlice = createSlice({
         state.locked = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        console.log({action})
+        console.log({ action });
+        // @ts-ignore
         if (action.payload?.locked) {
           state.locked = true;
+          // @ts-ignore
           state.error = action.payload.message;
-        } 
-        else{
-            state.error = action.payload as string;
+        } else {
+          state.error = action.payload as string;
         }
         state.loading = false;
-        
       });
   },
 });
