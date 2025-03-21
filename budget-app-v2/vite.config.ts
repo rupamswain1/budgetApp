@@ -33,6 +33,7 @@ export default defineConfig({
       },
     },
   ],
+  base: '/kharcha/',
   build: {
     minify: 'terser', // Enable terser minification
     terserOptions: {
