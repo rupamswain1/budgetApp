@@ -8,11 +8,14 @@
         // margin-right: 0.8em;
         height: 30dvh;
     }
-   
+
 }
 .reports-expense{
-    height: 45dvh;
+    height: 95dvh;
 }
 .reports-container{
     overflow: auto;
+    .content-layout{
+        overflow: unset !important;
+       }
 }

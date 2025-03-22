@@ -1,17 +1,17 @@
-import { Card, Dropdown, PieChart } from "$components";
-import { useCallback, useMemo, useState } from "react";
-import "./breakupChaer.style.scss";
-import { Expenses } from "$interfaces";
+import { Card, Dropdown, PieChart } from '$components';
+import { useCallback, useMemo, useState } from 'react';
+import './breakupChaer.style.scss';
+import { Expenses } from '$interfaces';
 const optionsMap = {
-  "Item Name": "itemName",
-  "Paid By": "paidBy",
-  Category: "category",
-  "Payment Method": "paymentMethod",
+  'Item Name': 'itemName',
+  'Paid By': 'paidBy',
+  Category: 'category',
+  'Payment Method': 'paymentMethod',
 };
 type optionsEnum = (typeof optionsMap)[keyof typeof optionsMap];
 const BreakupChart = ({ data }: { data: Expenses[] }) => {
   const optionsObj = useMemo(() => optionsMap, []);
-  const [groupBy, setGroupBy] = useState<optionsEnum>(optionsMap["Item Name"]);
+  const [groupBy, setGroupBy] = useState<optionsEnum>(optionsMap['Item Name']);
   const handleSetGroupBy = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGroupBy(optionsMap[e.target.value as keyof typeof optionsMap]);
   };
@@ -19,8 +19,12 @@ const BreakupChart = ({ data }: { data: Expenses[] }) => {
   const groupByData = useCallback(
     (expenses: Expenses[], fieldName: optionsEnum) => {
       console.log({ fieldName });
-      const groupedData: { id: optionsEnum; value: number; label: optionsEnum; color:string }[] =
-        [];
+      const groupedData: {
+        id: optionsEnum;
+        value: number;
+        label: optionsEnum;
+        color: string;
+      }[] = [];
 
       expenses.forEach((expense) => {
         const expGroupInArr = groupedData.find(
@@ -30,10 +34,10 @@ const BreakupChart = ({ data }: { data: Expenses[] }) => {
 
         if (!expGroupInArr) {
           groupedData.push({
-            id: String(expense[fieldName as keyof Expenses] ?? ""),
+            id: String(expense[fieldName as keyof Expenses] ?? ''),
             value: expense.price ?? 0,
             label: String(expense[fieldName as keyof Expenses]),
-            color:getRandomRgbColor()
+            color: getRandomRgbColor(),
           });
         } else {
           expGroupInArr.value += expense.price ?? 0;
@@ -62,7 +66,7 @@ const BreakupChart = ({ data }: { data: Expenses[] }) => {
           value={
             Object.keys(optionsMap).find(
               (k) => optionsMap[k as keyof typeof optionsMap] === groupBy
-            ) ?? ""
+            ) ?? ''
           }
           onChangeHandler={handleSetGroupBy}
         />
@@ -70,7 +74,10 @@ const BreakupChart = ({ data }: { data: Expenses[] }) => {
     >
       <>
         {data && data.length > 0 && (
-          <PieChart data={groupByData(data, groupBy)} />
+          <PieChart
+            data={groupByData(data, groupBy)}
+            margin={{ top: 30, right: 40, bottom: 50, left: 40 }}
+          />
         )}
       </>
     </Card>

@@ -1,9 +1,22 @@
 .cardContainer{
+    position: relative;
+    width:85dvw;
     .select-container {
         width: 22%;
         margin-right: 0.5rem;
         .input-label{
             display: none;
         }
+    }
+    .dropdown-input{
+        font-size: 0.7rem;
+        border-radius: 50px;
+        height: 20px;
+        position: absolute;
+        top:2.8rem;
+        left:0;
+        width:40%;
+        margin-left: 0.5rem;
+        z-index: 200;
     }
 }

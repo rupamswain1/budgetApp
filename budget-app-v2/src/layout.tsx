@@ -1,8 +1,7 @@
-
-import { ROUTES } from "$constants";
-import { Homepage, LoginPage, ReportsPage } from "$pages";
-import { ProtectedRoute } from "$routes";
-import { Route, Routes } from "react-router";
+import { ROUTES } from '$constants';
+import { Homepage, LoginPage, ReportsPage, Setting } from '$pages';
+import { ProtectedRoute } from '$routes';
+import { Route, Routes } from 'react-router';
 
 const Layout = () => {
   return (
@@ -12,8 +11,8 @@ const Layout = () => {
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.HOME} element={<Homepage />} />
           <Route path={ROUTES.REPORTS} element={<ReportsPage />} />
+          <Route path={ROUTES.SETTINGS} element={<Setting />} />
         </Route>
-
       </Routes>
     </>
   );

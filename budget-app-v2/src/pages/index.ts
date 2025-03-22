@@ -1,4 +1,5 @@
-export { default as Homepage } from "./homePage/HomePage";
-export { default as LoginPage } from "./loginPage/LoginPage";
-export {default as QuickAddExpenses} from "./quickAddExpense/QuickAddExpense";
-export {default as ReportsPage} from "./reports/ReportsPage";
+export { default as Homepage } from './homePage/HomePage';
+export { default as LoginPage } from './loginPage/LoginPage';
+export { default as QuickAddExpenses } from './quickAddExpense/QuickAddExpense';
+export { default as ReportsPage } from './reports/ReportsPage';
+export { default as Setting } from './setting/Setting';

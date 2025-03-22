@@ -1,10 +1,20 @@
-import { ResponsivePie } from "@nivo/pie";
+import { ResponsivePie } from '@nivo/pie';
 
 interface PieData {
   id: string;
   label: string;
   value: number;
   color?: string;
+}
+
+interface PieDataProps {
+  data: PieData[];
+  margin?: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
 }
 
 const CenteredMetric = ({
@@ -23,31 +33,34 @@ const CenteredMetric = ({
       textAnchor="middle"
       dominantBaseline="central"
       style={{
-        fontSize: "18px",
-        fontWeight: "bold",
-        fill: "#333",
+        fontSize: '18px',
+        fontWeight: 'bold',
+        fill: '#333',
       }}
     >
-      Total : {"\u20B9"} {data?.reduce((acc,datum)=>acc += datum.value,0)}
+      Total : {'\u20B9'} {data?.reduce((acc, datum) => (acc += datum.value), 0)}
     </text>
   );
 };
-const PieChart = ({ data }: { data: PieData[] }) => (
+const PieChart = ({
+  data,
+  margin = { top: 20, right: 40, bottom: 50, left: 40 },
+}: PieDataProps) => (
   <ResponsivePie
     data={data}
-    margin={{ top: 20, right: 40, bottom: 50, left: 40 }}
+    margin={margin}
     innerRadius={0.75}
     padAngle={2}
     sortByValue={true}
     fit={true}
     activeOuterRadiusOffset={8}
     colors={{
-      datum: "data.color",
+      datum: 'data.color',
     }}
     borderWidth={1}
     borderColor={{
-      from: "color",
-      modifiers: [["darker", 0]],
+      from: 'color',
+      modifiers: [['darker', 0]],
     }}
     arcLinkLabelsSkipAngle={9}
     arcLinkLabelsTextColor="#333333"
@@ -55,18 +68,18 @@ const PieChart = ({ data }: { data: PieData[] }) => (
     arcLinkLabelsDiagonalLength={0}
     arcLinkLabelsStraightLength={5}
     arcLinkLabelsThickness={2}
-    arcLinkLabelsColor={{ from: "color" }}
+    arcLinkLabelsColor={{ from: 'color' }}
     arcLabelsSkipAngle={15}
     arcLabelsTextColor={{
-      from: "color",
-      modifiers: [["brighter", 2]],
+      from: 'color',
+      modifiers: [['brighter', 2]],
     }}
     arcLinkLabel={(d) => `${d.id}`}
     layers={[
-      "arcs",
-      "arcLabels",
-      "arcLinkLabels",
-      "legends",
+      'arcs',
+      'arcLabels',
+      'arcLinkLabels',
+      'legends',
       (props) => <CenteredMetric {...props} data={data} />,
     ]}
   />
